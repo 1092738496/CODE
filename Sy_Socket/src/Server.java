@@ -25,7 +25,7 @@ public class Server {
             }
 
             OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-            String response = "收到请求!";
+            String response = "收到请求!!!!";
             String httpResponse = "HTTP/1.1 200 OK\r\n" +
                     "Content-Type: text/plain; charset=UTF-8\r\n" +
                     "Content-Length: " + response.length() + "\r\n" +
