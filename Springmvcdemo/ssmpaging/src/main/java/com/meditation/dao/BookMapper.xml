@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespbace 指定mapper接口类-->
+<mapper namespace="com.meditation.dao.BookDao">
+    <!--id指定方法名 相当于实现接口该方法  返回类型,再配置文件当中填写路径-->
+    <select id="limitBook" resultType="Book">
+        select *
+        from book limit #{Start},#{Quanlity};
+    </select>
+
+    <select id="Booksum" resultType="int">
+        SELECT count(id)
+        FROM book;
+    </select>
+
+    <insert id="addBook" parameterType="Book">
+        INSERT INTO book (BookImage, BookName, Author, Intro, UpdateTime, BookUrl, Price, Rent) VALUE (#{BookImage},#{BookName},#{Author},#{intro},#{UpdateTime},#{BookUrl},#{Price},#{Rent});
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM book
+        WHERE Id = #{id};
+    </delete>
+
+    <update id="modify" parameterType="com.meditation.pojo.Book">
+        updata book set
+            BookName = #{BookName},BookImage = #{BookImage},Author = #{Author},Intro = #{intro},UpdataTime = #{UpdateTime},
+            BookUrl = #{BookUrl},Price = #{Price},Rent = #{Rent}
+
+            where id=#{id};
+
+    </update>
+
+    <select id="CheckBookid" resultType="Book">
+        select *
+        from book
+        where id = #{id};
+    </select>
+
+    <select id="LikeBookpage" resultType="Book">
+        SELECT *
+        FROM book
+        where BookName LIKE concat('%', #{BookName}, '%')
+        limit #{Start},#{Quanlity};
+    </select>
+
+    <select id="LikeBooksum" resultType="int">
+        SELECT count(id)
+        FROM book
+        where BookName LIKE '%上%' limit 0,5;
+    </select>
+</mapper>

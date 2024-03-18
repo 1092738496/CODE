@@ -1,0 +1,1 @@
+add_library(myadd SHARED add.cpp)

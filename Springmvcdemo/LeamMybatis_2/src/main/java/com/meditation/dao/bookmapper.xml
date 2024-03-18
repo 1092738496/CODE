@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespbace 指定mapper接口类-->
+<mapper namespace="com.meditation.dao.bookmapper">
+    <!--id指定方法名 相当于实现接口该方法  返回类型,再配置文件当中填写路径-->
+    <select id="selectbook" resultType="com.meditation.pojo.Book">
+        select * from book;
+    </select>
+    <select id="getbook" resultType="com.meditation.pojo.Book" parameterType="int">
+        SELECT * FROM book WHERE id = #{id}
+    </select>
+    <update id="updatebook" parameterType="com.meditation.pojo.Book">
+        UPDATE book SET
+        BookName=#{BookName},BookImage=#{Booklmage},Author=#{Author},Intro=#{intro},UpdateTime=#{UpdateTime},BookUrl=#{BookUrl},Price=#{Price},Rent=#{Rent} WHERE Id=#{id}
+    </update>
+    <delete id="deletebook" parameterType="int">
+        DELETE FROM book WHERE Id = #{id}
+    </delete>
+    <insert id="intsetbook" parameterType="com.meditation.pojo.Book">
+        INSERT INTO book (BookName,BookImage,Author,Intro,UpdateTime,BookUrl,Price,Rent) VALUES
+        (#{BookName},#{Booklmage},#{Author},#{intro},#{UpdateTime},#{BookUrl},#{Price},#{Rent})
+    </insert>
+</mapper>

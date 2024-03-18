@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationcontext.xml</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>pagingServlet</servlet-name>
+        <servlet-class>com.meditation.servlet.pagingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pagingServlet</servlet-name>
+        <url-pattern>/pagingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>imageServlet</servlet-name>
+        <servlet-class>com.meditation.servlet.imageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>imageServlet</servlet-name>
+        <url-pattern>/imageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CRUDServlet</servlet-name>
+        <servlet-class>com.meditation.servlet.CRUDServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CRUDServlet</servlet-name>
+        <url-pattern>/CRUDServlet</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>pagingFilter</filter-name>
+        <filter-class>com.meditation.util.pagingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>pagingFilter</filter-name>
+        <url-pattern>/pagingServlet</url-pattern>
+    </filter-mapping>
+    
+    <listener>
+        <listener-class>com.meditation.util.bookListener</listener-class>
+    </listener>
+
+</web-app>

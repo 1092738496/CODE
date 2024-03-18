@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespbace 指定mapper接口类-->
+<mapper namespace="com.meditation.dao.bookdao">
+    <!--id指定方法名 相当于实现接口该方法  返回类型,再配置文件当中填写路径-->
+    <select id="sumbook" resultType="int">
+        SELECT count(Id) FROM book;
+    </select>
+    <select id="limitbook" parameterType="map" resultType="book">
+        SELECT Id,BookName,Author,Intro,Updatetime,BookUrl,Price,Rent FROM book limit #{indexes},#{showdata};
+    </select>
+    <select id="getbook" parameterType="int" resultType="book">
+        SELECT BookImage FROM book WHERE Id=#{id};
+    </select>
+    <select id="deletebook" parameterType="Integer">
+        DELETE FROM book WHERE Id = #{id};
+    </select>
+    <insert id="addbook" parameterType="book">
+        INSERT INTO book (BookImage,BookName,Author,Intro,UpdateTime,BookUrl,Price,Rent)
+        VALUES (#{BookImage},#{BookName},#{Author},#{intro},#{UpdateTime},#{BookUrl},#{Price},#{Rent});
+    </insert>
+
+</mapper>

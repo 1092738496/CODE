@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespbace 指定mapper接口类-->
+<mapper namespace="com.meditation.dao.BookDao">
+    <!--id指定方法名 相当于实现接口该方法  返回类型,再配置文件当中填写路径-->
+    <select id="getbook" resultType="book">
+        SELECT * FROM book WHERE id = #{id};
+    </select>
+    <select id="viewbook" resultType="book">
+        SELECT * FROM book;
+    </select>
+    <insert id="addbook" parameterType="map">
+        INSERT INTO book(Id,BookName,BookImage,Author,Intro,UpdateTime,BookUrl,Price,Rent) VALUE
+        (#{Id},#{BookName},#{BookImage},#{Author},#{Intro},#{UpdateTime},#{BookUrl},#{Price},#{Rent});
+    </insert>
+    <update id="modifybook" parameterType="book">
+        UPDATE book SET
+        BookName=#{BookName},BookImage=#{Booklmage},Author=#{Author},Intro=#{intro},UpdateTime=#{UpdateTime},BookUrl=#{BookUrl},Price=#{Price},Rent=#{Rent} WHERE Id=#{id}  ;
+    </update>
+    <delete id="deletebook" parameterType="int">
+        DELETE FROM book WHERE Id = #{id};
+    </delete>
+
+    <select id="sumbook" resultType="int">
+        SELECT COUNT(*) FROM book;
+    </select>
+    <select id="paging" parameterType="map" resultType="book">
+        SELECT * FROM book LIMIT #{indexes},#{showdata};
+    </select>
+
+</mapper>

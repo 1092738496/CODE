@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespbace 指定mapper接口类-->
+<mapper namespace="com.meditation.dao.bookDao" >
+    <!--id指定方法名 相当于实现接口该方法  返回类型,再配置文件当中填写路径-->
+    <select id="getbook" resultType="com.meditation.pojo.Book" parameterType="">
+        select * from book;
+    </select>
+
+</mapper>
