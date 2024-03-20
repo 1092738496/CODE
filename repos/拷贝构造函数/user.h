@@ -60,6 +60,7 @@ public:
     }
 
     void setRemark(const char* _remark) {
+        
         strncpy_s(remark, _remark, sizeof(remark) - 1);
         remark[sizeof(remark) - 1] = '\0';
     }

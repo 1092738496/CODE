@@ -3,7 +3,6 @@ import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.net.URLEncodeUtil;
 import com.github.stuxuhai.jpinyin.ChineseHelper;
 import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.ooxml.POIXMLDocument;
@@ -190,33 +189,28 @@ public class test {
         headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"));
         httpUtils httpUtils = new httpUtils(headers);
-        try {
-            String name = URLEncodeUtil.encode("国产");
+        String name = URLEncodeUtil.encode("国产");
 
-            int i = 1;
-            int size = 0;
-            do {
-                String s = httpUtils.get("https://laowang508frh.xyz/forum.php?mod=forumdisplay&fid=65&page=" + i);
-
-                //https://laowang508frh.xyz/search/s.php?q=国人&m=&f=subject&s=dateline_DESC&fid=&p=2
-                Elements select = Jsoup.parse(s).select("#threadlisttableid > tbody");
-                size = select.size();
-                System.out.println(size);
-                for (Element element : select) {
-                    Elements select1 = element.select("tbody > tr > th > a.s.xst");
-                    if (!select1.text().contains("已失效")) {
-                        String text = element.select("tbody > tr > th > a.s.xst").text();
-                        System.out.println(text);
-                        System.out.println(select1.attr("href"));
-
-                    }
+        int i = 1;
+        int size = 0;
+        do {
+            String s = httpUtils.get("https://laowang508frh.xyz/forum.php?mod=forumdisplay&fid=65&page=" + i);
+            //https://laowang508frh.xyz/search/s.php?q=国人&m=&f=subject&s=dateline_DESC&fid=&p=2
+            Elements select = Jsoup.parse(s).select("#threadlisttableid > tbody");
+            size = select.size();
+            System.out.println(size);
+            for (Element element : select) {
+                Elements select1 = element.select("tbody > tr > th > a.s.xst");
+                if (!select1.text().contains("已失效")) {
+                    String text = element.select("tbody > tr > th > a.s.xst").text();
+                    System.out.println(text);
+                    System.out.println(select1.attr("href"));
 
                 }
-                i++;
-            } while (size == 30);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+
+            }
+            i++;
+        } while (size == 30);
     }
 
     @Test
@@ -225,30 +219,26 @@ public class test {
         headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"));
         httpUtils httpUtils = new httpUtils(headers);
-        try {
-            String name = URLEncodeUtil.encode("国产");
+        String name = URLEncodeUtil.encode("国产");
 
-            int i = 1;
-            int size = 0;
-            do {
-                String s = httpUtils.get("https://laowang.vip/forum-65-"+i+".html");
-                Elements select = Jsoup.parse(s).select("#moderate > table > tbody");
-                size = select.size();
-                for (Element element : select) {
-                    Elements select1 = element.select("tr > th > a.s.xst");
-                    if (!select1.text().contains("已失效")) {
-                        if (select1.text().contains("涟漪")) {
-                            System.out.println(select1.text());
-                            System.out.println(select1.attr("href"));
+        int i = 1;
+        int size = 0;
+        do {
+            String s = httpUtils.get("https://laowang.vip/forum-65-"+i+".html");
+            Elements select = Jsoup.parse(s).select("#moderate > table > tbody");
+            size = select.size();
+            for (Element element : select) {
+                Elements select1 = element.select("tr > th > a.s.xst");
+                if (!select1.text().contains("已失效")) {
+                    if (select1.text().contains("涟漪")) {
+                        System.out.println(select1.text());
+                        System.out.println(select1.attr("href"));
 
-                        }
                     }
-
                 }
-                i++;
-            } while (size > 30);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+
+            }
+            i++;
+        } while (size > 30);
     }
 }

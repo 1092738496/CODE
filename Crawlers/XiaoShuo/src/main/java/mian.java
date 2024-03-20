@@ -1,15 +1,14 @@
-import cn.hutool.core.net.URLEncodeUtil;
-import org.apache.commons.collections4.map.LinkedMap;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @time: 2023/12/17 23:51
@@ -24,58 +23,50 @@ public class mian {
                 "(KHTML, like Gecko) Chrome/120.0.0.0 " +
                 "Safari/537.36"));
         httpUtils httpUtils = new httpUtils(headers);
-        LinkedList<String> list = new LinkedList<String>();
-        System.out.println("请输入要搜索的小说:");
-        LinkedMap<String, String> maps = new LinkedMap<String, String>();
-        try {
-            String html = httpUtils.get("https://crxs.me/");
-            Elements as = Jsoup.parse(html).select("body > div.main > div > div.aside > div:nth-child(3) > a");
-            int i = 1;
-            for (Element a : as) {
-                String href = a.attr("href");
-                System.out.println(i + "." + a.text());
-                i++;
-                list.add(href);
+        String url = "https://e-hentai.org/g/2776964/361e23317a/";
+        String title = "";
+        List<String> list = new ArrayList<>();
+
+        int size = 0;
+        int n = 0;
+        do {
+            String url2 = url;
+            if (n != 0) {
+                url2 = url + "?p=" + n;
             }
-
-            Scanner input = new Scanner(System.in);
-            int x = input.nextInt();
-            String href = "https://crxs.me" + list.get(x - 1);
-            String decode = URLEncodeUtil.encode(href);
-            String s = httpUtils.get(decode);
-            Elements select = Jsoup.parse(s).select("body > div.main > div > div.body > div:nth-child(3) > " +
-                    "div:nth-child(3) > div:nth-child(1) > a");
-            int page = Integer.parseInt(select.get(select.size() - 2).text());
-
-
-            String s1 = decode.split(".html")[0];
-
-
-            for (int j = 1; j <= page; j++) {
-                String s2 = httpUtils.get(s1 + "/" + j + ".html");
-                Elements selects = Jsoup.parse(s2).select("body > div.main > div > div.body > div:nth-child(3) > div" +
-                        ".lists " +
-                        "> a");
-                for (Element element : selects) {
-                    String text = element.select("div > div.title").text();
-                    System.out.println(text+":"+"https://crxs.me/" + element.attr("href"));
-                    if (text.contains("催眠")) {
-                        maps.put(text, "https://crxs.me/" + element.attr("href"));
-                    }
+            String html = httpUtils.get(url2);
+            Document parse = Jsoup.parse(html);
+            title = parse.title();
+            Elements select = parse.select("#gdt > div");
+            size = select.size();
+            for (Element element : select) {
+                String href = element.select("div > div > a").attr("href");
+                if (!href.equals("")) {
+                    list.add(href);
                 }
             }
-            System.out.println("~~~~~~~~~~正常结果~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            for (String s2 : maps.keySet()) {
-                System.out.println(s2 + ":" + maps.get(s2));
-            }
+            n++;
 
-        } catch (Exception e) {
-            System.out.println("~~~~~~~~~~异常结果~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            for (String s2 : maps.keySet()) {
-                System.out.println(s2 + ":" + maps.get(s2));
+        } while (size > 40);
+
+        new File("E://" + title).mkdir();
+        int m = 1;
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println((i + 1));
+            String s = httpUtils.get(list.get(i));
+            String src = Jsoup.parse(s).select("#img").attr("src");
+            try {
+                httpUtils.download(src, "E:\\" + title + "\\" + (i + 1) + ".png");
+            } catch (IOException e) {
+                if (m != 5) {
+                    i--;
+                }else{
+                    m=0;
+                }
+                m++;
             }
-            e.printStackTrace();
         }
+
     }
 
 

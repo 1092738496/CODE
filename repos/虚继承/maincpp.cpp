@@ -44,7 +44,7 @@ public:
 
 class X : public Z{
 public:
-	virtual void show() {
+	 void show() {
 		cout << "細細細細" << endl;
 	}
 };
