@@ -16,11 +16,6 @@ void testlist() {
 	list.push_back(11);
 	list.push_back(22);
 
-
-	/*auto it = list.begin();
-		it++;
-		cout << *it << endl;*/
-
 	for (auto it = list.begin(); it != list.end(); ++it) {
 		cout << *it <<endl;
 	}

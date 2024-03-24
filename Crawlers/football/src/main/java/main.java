@@ -10,7 +10,7 @@ public class main {
 
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("数据获取请输入 1,统计请输入 2:");
+        System.out.println("1,数据获取请输入 1,统计请输入");
         String ru = scanner.nextLine();
         if (ru.equals("1")) {
             new Getdata().tabular_data();
