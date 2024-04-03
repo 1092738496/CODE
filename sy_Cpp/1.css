@@ -1,0 +1,63 @@
+.workspace-ribbon {
+  padding-left: 44px; /*左侧栏按钮与命令区间距*/
+  padding-block: 0; /*贴底边*/
+}
+.workspace-ribbon.mod-left .side-dock-ribbon-action {
+  margin: 7px 0 8px; /*左侧栏按钮与底边间距|设置、命令区按钮间距|整体与底边间距*/
+}
+
+.workspace-ribbon.mod-left {
+  overflow: visible;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  z-index: 17;
+  bottom: 0; /*整体位置*/
+  gap: 0; /*设置区与命令区间距*/
+}
+.side-dock-actions, .side-dock-settings {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background: var(--background-secondary); /*设置、命令区背景颜色*/
+  gap: var(--size-1-1); /*设置、命令区按钮间距*/
+}
+
+/*平时隐藏，悬停显示*/
+.workspace-ribbon.mod-left:not(:hover) {opacity: 0; transition: var(--anim-duration-fast);}
+
+
+
+body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-horizontal.mod-left-split > div.workspace-tabs.mod-top.mod-top-left-space > div.workspace-tab-container > div:nth-child(1) > div > div.nav-header > div{
+float: left;
+}
+
+body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-header-container > div.workspace-tab-header-tab-list{
+display: none;
+}
+
+body > div.app-container > div.status-bar{
+display: none;
+}
+
+.side-dock-settings {
+  border-right: var(--size-2-1) solid var(--background-modifier-border); /*右边框粗细颜色等*/
+  border-top-right-radius: var(--radius-m); /*右边框弧度*/
+}
+
+/*设置、命令区按钮阴影*/
+:is(.side-dock-settings, .side-dock-actions) .clickable-icon:hover {background-color: transparent;}
+
+
+.nav-file-title, .nav-folder-title {
+   font-size: 17px;
+}
+.theme-dark {
+  --color-base-50: #aeaeae;
+  --color-base-100: #bebcbc;
+}
+
+body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-source-view.cm-s-obsidian.mod-cm6.node-insert-event.is-live-preview.is-folding.is-readable-line-width > div > div.cm-scroller > div.cm-sizer > div.cm-contentContainer {
+  width: 100%;
+  height: 100px;
+}
