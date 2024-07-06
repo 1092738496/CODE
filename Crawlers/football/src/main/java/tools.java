@@ -23,6 +23,20 @@ public class tools {
                 }
             }
         }
+
+        return z.toString();
+    }
+
+    public static String regexStr1(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        StringBuilder z = new StringBuilder();
+        while (matcher.find()) {
+            if (!matcher.group().equals("")) {
+                z.append(matcher.group());
+            }
+        }
+
         return z.toString();
     }
 
@@ -52,7 +66,7 @@ public class tools {
                     listx.add(shengnv);
                     String yingnv = regexStr(s, "赢率:([0-9*.])*%").replaceAll("赢率:", "");
                     listx.add(yingnv);
-                }else{
+                } else {
                     listx.add(s);
                 }
             } else {
@@ -62,7 +76,7 @@ public class tools {
         return listx;
     }
 
-    public static Double Re(String value){
+    public static Double Re(String value) {
         Double index = null;
         if (!value.equals("")) {
             index = Double.valueOf(value.replaceAll("%", ""));

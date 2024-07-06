@@ -9,6 +9,7 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
+import pojo.yaTre;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -65,28 +66,9 @@ public class test {
 
     @Test
     public void test3() {
-        httpUtils httpUtils = new httpUtils();
-        List<Header> headers = new ArrayList<>();
-        headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-                "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"));
-        httpUtils.setHeaders(headers);
-        try {
-            boolean run = false;
-            String s = httpUtils.get("https://1x2d.titan007.com/" + 2545888 + ".js", "utf-8");
-            if (!s.equals("")) {
-                String s3 = tools.regexStr(s, "game=Array\\(\\\".*\\);");
-                String[] split = s3.split("\",\"");
-                System.out.println(split.length);
-                if (split.length >= 13) {
-                    run = true;
-                }
-            }
-            System.out.println(run);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        yaTre getdata = new yaData().getdata("2579169");
+        System.out.println(null == getdata);
+
     }
 
     @Test

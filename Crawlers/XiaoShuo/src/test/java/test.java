@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,17 +110,26 @@ public class test {
     public void updataFileName(String path) {
         Map<String, String> map = new HashMap<>();
 
+
         map.put("操干", "捅");
+        map.put("抽插", "草");
+        map.put("抽草", "草");
+        map.put("欠肏", "欠草");
         map.put("口交", "吃鸡吧");
         map.put("欠干", "欠日");
         map.put("干死你", "草死你");
         map.put("日屄", "日逼");
-        map.put("肏屄", "肏逼");
+        map.put("肏屄", "操逼");
         map.put("揉屄", "揉逼");
         map.put("挨肏", "挨操");
         map.put("肏迷糊", "操迷糊");
-//屄
+        map.put("淫弄", "日");
+        map.put("弄死", "草死");
+        map.put("插死", "草死");
+        map.put("碧血洗银枪", "逼血洗鸡巴");
 
+//屄
+        map.put("肉棒棒", "鸡巴");
         map.put("肉棒", "鸡巴");
         map.put("巨根", "巨大鸡巴");
         map.put("龟头", "鸡巴头");
@@ -127,22 +137,28 @@ public class test {
         map.put("性能力", "操逼能力");
         map.put("粗屌", "粗鸡巴");
         map.put("肉屌", "鸡巴");
+        map.put("肥根", "鸡巴");
+        map.put("肥棒", "鸡巴");
+        map.put("肉棍", "鸡巴");
+
 
         map.put("乳房", "奶子");
         map.put("奶奶", "奶子");
+        map.put("乳球", "奶子");
         map.put("乳头", "奶头");
         map.put("乳尖", "奶尖");
         map.put("肥乳", "肥奶子");
         map.put("乳汁", "奶水");
         map.put("乳罩", "奶罩");
         map.put("胸罩", "奶罩");
-        map.put("失禁", "撒尿");
+        map.put("失禁", "尿");
         map.put("阴屄", "骚逼");
+        map.put("阴户", "阴屄");
 
-        map.put("口屄", "嘴逼");
 
+        /*map.put("屄", "逼");
+        map.put("小穴", "逼");*/
         map.put("穴", "屄");
-        map.put("小屄", "小逼");
         map.put("花瓣", "逼唇");
         map.put("阴毛", "逼毛");
         map.put("嫩屄", "嫩逼");
@@ -156,23 +172,35 @@ public class test {
         map.put("贱屄", "贱逼");
         map.put("屄水", "逼水");
         map.put("肉洞", "逼洞");
-        map.put("香屄", "香逼");
+        map.put("香屄", "骚逼");
         map.put("屄屄", "逼逼");
         map.put("肉唇", "逼唇");
-        map.put("花屄", "花逼");
+        map.put("小洞", "小屄");
+        map.put("屄肉", "逼肉");
+        map.put("肉屄", "逼屄");
+        map.put("露屄", "露逼");
+        map.put("踩屄", "踩逼");
+        map.put("小屄", "骚屄");
+        map.put("蜜屄", "湿屄");
 
-        map.put("肛蕾", "屁眼");
+        map.put("肛蕾", "屁蕾");
+        map.put("屁穴", "屁眼");
         map.put("腚眼", "屁眼");
         map.put("后庭", "屁眼");
         map.put("肛屄", "屁屄");
         map.put("肛门", "屁眼");
         map.put("菊花", "屁眼");
-        map.put("大鸡巴插", "大鸡巴肏");
+        map.put("后门", "屁眼");
+        map.put("大鸡巴插", "大鸡巴操");
 
         map.put("乳交", "插奶子");
         map.put("肛交", "操屁眼");
         map.put("屄交", "操逼");
-        FileReader fileReader = new FileReader(path);
+        FileReader fileReader = new FileReader(path,"utf-8");
+        if (fileReader.readString().contains("�")) {
+            fileReader = new FileReader(path ,"gbk");
+        }
+
         String s = this.traditionalToSimplified(fileReader.readString());
 
         for (String s1 : map.keySet()) {
@@ -181,6 +209,11 @@ public class test {
 
         FileWriter writer = new FileWriter(path);
         writer.write(s);
+    }
+
+
+    public static boolean isGarbled(String str, Charset charset) {
+        return !new String(str.getBytes(charset), charset).equals(str);
     }
 
     @Test

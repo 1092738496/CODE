@@ -18,6 +18,8 @@
         <module>gonganshenghuowang</module>
         <module>zhuqiu</module>
         <module>vidio_ZIMU_input</module>
+        <module>Test_1</module>
+        <module>footbal_Web</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,6 +33,12 @@
             <version>4.13.2</version>
             <scope>test</scope>
 
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.13</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>

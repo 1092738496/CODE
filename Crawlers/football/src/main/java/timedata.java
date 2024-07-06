@@ -17,7 +17,6 @@ import org.jsoup.select.Elements;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,8 +48,8 @@ public class timedata {
         try {
             String s = httpUtils.get("https://vip.titan007.com/AsianOdds_n.aspx?id=" + sid, "utf-8");
             Document parse = Jsoup.parse(s);
-            Elements select = null;
-                    LocalDate date1 = LocalDate.of(2024, 4, 20);
+            Elements select = parse.selectXpath("//*[@id=\"odds\"]/tbody/tr[(@bgcolor and @bgcolor != '') and not(@companyid)]");
+           /*         LocalDate date1 = LocalDate.of(2024, 4, 20);
             boolean isAfter = date1.isAfter(LocalDate.now());
             if (isAfter) {
                 select = parse.selectXpath("//*[@id=\"odds\"]/tbody/tr[(@bgcolor and @bgcolor != '') and not" +
@@ -58,7 +57,7 @@ public class timedata {
             } else {
                 select = parse.select("//*[@id=\"odds\"]/tbody/tr[(@bgcolor and @bgcolor != '') and not" +
                         "(@companyid)]");
-            }
+            }*/
             for (Element element : select) {
                 IdentityHashMap<String, ArrayList<ArrayList<Object>>> map = new IdentityHashMap<>();
                 String text = new String(element.select("tr > td").first().text().replaceAll("封", ""));

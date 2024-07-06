@@ -150,7 +150,7 @@ public class Getdata {
                     if (a_size.size() <= 6) {
                         a_index = a_size.size();
                     }
-                    //-------------------------------------------------------------------
+                    //------------------------------------liansai-------------------------------
                     //全
 
 
@@ -261,6 +261,7 @@ public class Getdata {
                     list.add(ktj3);
                     lists.add(list);
                     System.out.println("-----------------------------------");
+
                 }
             } catch (Exception e) {
                 playwright.close();
