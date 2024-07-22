@@ -119,10 +119,28 @@ public class test {
     @Test
     public void test6() {
         LocalDate date1 = LocalDate.of(2024, 5, 1);
-
         boolean isAfter = date1.isAfter(LocalDate.now()); // false
-
         System.out.println(isAfter);
+    }
 
+    @Test
+    public void test7() throws IOException, ParseException {
+        List<Header> headers = new ArrayList<Header>();
+        headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"));
+        httpUtils utils = new httpUtils(headers);
+        String s = "";
+        for (int i = 0; i < 1000; i++) {
+            /*s = utils.get(
+                    "https://www.okooo.com/soccer/match/1257623/ah/line/14/",
+                    "gbk");*/
+            s = utils.get(
+                    "https://www.okooo.com/soccer/match/1257623/ah/ajax/?page=0&trnum=0&companytype=BaijiaBooks",
+                    "utf-8");
+            System.out.println(i);
+        }
+        System.out.println(s);
+
+        //https://www.okooo.com/soccer/match/1257623/ah/ajax/?page=2&trnum=60&companytype=BaijiaBooks
     }
 }

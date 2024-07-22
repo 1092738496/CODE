@@ -1,5 +1,7 @@
 package com.meditation.dao;
 
+import com.meditation.pojo.corporation;
+import com.meditation.pojo.overview;
 import org.apache.hc.core5.http.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -15,13 +17,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @time: 2024/7/6 18:49
+ * @time: 2024/7/18 12:02
  * @description:
  */
-
 @Component
-public class ya {
-
+public class ya2 {
     @Autowired
     private com.meditation.utils.tools tools;
 
@@ -31,8 +31,10 @@ public class ya {
     @Autowired
     ThreadPoolExecutor pool;
 
-    public LinkedHashMap<String,List<List<String>>> xiang_tongji(String id) {
-        LinkedHashMap<String,List<List<String>>> maps_s = new LinkedHashMap<>();
+    public  LinkedHashMap<String, corporation> xiang_tongji(String id) {
+
+        LinkedHashMap<String, corporation> maps_s = new LinkedHashMap<>();
+
         String html = null;
         try {
             html = httpUtils.get("https://vip.titan007.com/AsianOdds_n.aspx?id=" + id, "utf-8");
@@ -49,12 +51,22 @@ public class ya {
                 CompletableFuture future =
                         CompletableFuture.runAsync(()->{
                             String name = tr.select("td:nth-child(1)").text().replaceAll("封", "");
+                            String zdq = tr.select("td:nth-child(3)").text();
+                            String zjq = tr.select("td:nth-child(4)").text();
+                            String zxq = tr.select("td:nth-child(5)").text();
+
+                            String kdq = tr.select("td:nth-child(9)").text();
+                            String kjq = tr.select("td:nth-child(10)").text();
+                            String kxq = tr.select("td:nth-child(11)").text();
+                            overview overview = new overview(zdq,zjq,zxq,kdq,kjq,kxq);
                             String url = "https://vip.titan007.com" + tr.select("td:last-child > a:nth-child(1)").attr(
                                     "href");
                             // System.out.println(name);
                             //System.out.println(url);
-                            List<List<String>> lists = ji_zao(url);
-                            maps_s.put(name, lists);
+                            corporation corporation = new corporation();
+                            corporation.setOverview(overview);
+                            corporation.setLists(ji_zao(url));
+                            maps_s.put(name, corporation);
                         },pool);
                 futures.add(future);
             }

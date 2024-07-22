@@ -67,7 +67,7 @@ public class timedata {
                 Elements select1 = Jsoup.parse(jidata).select("#odds2 > table > tbody > tr");
                 ArrayList<ArrayList<Object>> list1 = new ArrayList<>();
                 for (Element element1 : select1) {
-                    if (element1.select("tr > td:last-child").text().equals("即")) {
+                    if (element1.select("tr > td:last-child").text().equals("即")||element1.select("tr > td:last-child").text().equals("早")) {
                         ArrayList<Object> list2 = new ArrayList<>();
                         Elements select2 = element1.select("tr > td");
                         if (select2.size() == 7) {

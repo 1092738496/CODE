@@ -1,9 +1,9 @@
 package com.meditation.service;
 
+import com.meditation.pojo.tong_ke;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -16,15 +16,15 @@ public class Xin_service {
     private com.meditation.dao.xin xin;
 
     private final ReentrantLock lock = new ReentrantLock();
-    public LinkedHashMap<String, String> xin_compute(String sid){
-        LinkedHashMap<String, String> map;
+    public tong_ke xin_compute(String sid){
+        tong_ke tong_ke = null;
         lock.lock();
         try {
-            map = xin.duisai_wangji(sid);
+            tong_ke = xin.duisai_wangji(sid);
         } finally {
             lock.unlock();
         }
-        return map;
+        return tong_ke;
     }
 
 }
