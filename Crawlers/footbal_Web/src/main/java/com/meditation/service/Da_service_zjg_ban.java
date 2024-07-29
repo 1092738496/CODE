@@ -21,20 +21,22 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @description:
  */
 @Service
-public class Da_service {
+public class Da_service_zjg_ban {
     private final DecimalFormat df = new DecimalFormat("#.##");
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d H:m");
     private int currentYear = Year.now().getValue();
+
 
     @Autowired
     ThreadPoolExecutor pool;
 
     @Autowired
-    com.meditation.dao.Da da;
+    com.meditation.dao.Da_zjg_ban da_zjg_ban;
 
-    public LinkedHashMap<String, corporation> metadata(String sid) {
+
+    public LinkedHashMap<String, corporation> metadata(String sid){
         //long startTime1 = System.nanoTime();
-        LinkedHashMap<String, corporation> maps_s = da.xiang_tongji(sid);
+        LinkedHashMap<String, corporation> maps_s = da_zjg_ban.xiang_tongji(sid);
 
         /*long endTime1 = System.nanoTime();
         long duration1 = endTime1 - startTime1;
@@ -92,7 +94,6 @@ public class Da_service {
                 mapz.put(name, addition);
             }
             CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-
             // 阻塞主线程，等待所有任务及其后续处理完成
             combinedFuture.join();
 
@@ -100,15 +101,12 @@ public class Da_service {
         }
         return maps_s;
     }
-
-    public LinkedHashMap<String, corporation> Da_compute(String sid) {
-
+    public  LinkedHashMap<String, corporation> Da_compute(String sid) {
         LinkedHashMap<String, corporation> maps_s = metadata(sid);
         compute(maps_s);
         return maps_s;
     }
-
-    public void compute(LinkedHashMap<String, corporation> maps_s) {
+    public void compute(LinkedHashMap<String, corporation> maps_s){
         //需求2：找出公司之间前三条数据相同
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             alike(maps_s);
@@ -122,7 +120,7 @@ public class Da_service {
     }
 
     //需求2：找出公司之间前三条数据相同
-    public void alike(LinkedHashMap<String, corporation> maps_s) {
+    public void alike(LinkedHashMap<String, corporation> maps_s){
         Map<String, String> mapz = new HashMap<>();
         for (String name : maps_s.keySet()) {
             List<List<String>> lists = maps_s.get(name).getLists();
@@ -158,9 +156,9 @@ public class Da_service {
         }
     }
 
-    private List<Double> mean_value(LinkedHashMap<String, corporation> mapx, String Thistime,
-                                    double z_subtrahend,
-                                    double k_subtrahend) {
+    private List<Double> mean_value( LinkedHashMap<String, corporation> mapx, String Thistime,
+                                     double z_subtrahend,
+                                     double k_subtrahend) {
         //System.out.println(Thistime);
         LocalDateTime localThistime = LocalDateTime.parse(currentYear + "-" + Thistime,
                 formatter);
@@ -178,26 +176,7 @@ public class Da_service {
                 kdoubles.add(Double.parseDouble(lists.get(x).get(2)));
             }
 
-           /* for (int i = 0; i < lists.size(); i++) {
-                List<String> list = lists.get(i);
-                String b_time = list.get(3);
-                if (Thistime.equals(b_time)) {
-                    //System.out.println(list);
-                    zdoubles.add(Double.parseDouble(list.get(0)));
-                    kdoubles.add(Double.parseDouble(list.get(2)));
-                    break;
-                } else {
-                    LocalDateTime localThistime = LocalDateTime.parse(currentYear + "-" + Thistime,
-                            formatter);
-                    LocalDateTime localB_time = LocalDateTime.parse(currentYear + "-" + b_time, formatter);
-                    if (localB_time.isBefore(localThistime)) {
-                        //System.out.println(list);
-                        zdoubles.add(Double.parseDouble(list.get(0)));
-                        kdoubles.add(Double.parseDouble(list.get(2)));
-                        break;
-                    }
-                }
-            }*/
+
         }
         double Znum = zdoubles.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
         double Knum = kdoubles.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
@@ -241,7 +220,6 @@ public class Da_service {
         // 但为了逻辑的完整性，这里应该不会发生
         return closestIndex;
     }
-
     //需求3：计算每家公司正负数级别
     //需求3：计算每家公司正负数级别
     public void corporation_calculate(LinkedHashMap<String, corporation> maps_s) {
@@ -368,7 +346,6 @@ public class Da_service {
             maps_s.get(key).setData_transmit(data_transmit);
         }
     }
-
 
     public LinkedHashMap<String, corporation> time_filtrate(String id, String timeStr, int hour) {
         LocalDateTime thisTime = LocalDateTime.parse(timeStr, formatter);

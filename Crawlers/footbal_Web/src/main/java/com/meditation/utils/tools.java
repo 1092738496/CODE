@@ -2,9 +2,6 @@ package com.meditation.utils;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +29,7 @@ public class tools {
         return z.toString();
     }
 
-    public  String regexStr1(String text, String regex) {
+    public   String regexStr1(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         StringBuilder z = new StringBuilder();
@@ -45,41 +42,6 @@ public class tools {
         return z.toString();
     }
 
-    public  List<List<String>> JsValue(String js, String args) {
-        args = "(var " + args + " = \\[\\[)";
-        String arr = regexStr(js, args + ".*;").replaceAll(args, "").replaceAll("\\]\\];", "").replaceAll("'", "");
-        List<List<String>> lists = new LinkedList<>();
-        String[] split = arr.split("\\],\\[");
-        for (int i = 0; i < 6; i++) {
-            List<String> list = new ArrayList<>();
-            for (String s1 : split[i].split(",")) {
-                list.add(s1);
-
-            }
-            lists.add(list);
-        }
-        return lists;
-    }
-
-    public  List<Object> ss(List<Object> list) {
-        ArrayList<Object> listx = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            String s = list.get(i).toString();
-            if (i > 5) {
-                if (!s.equals("")) {
-                    String shengnv = regexStr(s, "胜率:([0-9*.])*%").replaceAll("胜率:", "");
-                    listx.add(shengnv);
-                    String yingnv = regexStr(s, "赢率:([0-9*.])*%").replaceAll("赢率:", "");
-                    listx.add(yingnv);
-                } else {
-                    listx.add(s);
-                }
-            } else {
-                listx.add(s);
-            }
-        }
-        return listx;
-    }
 
     public  Double Re(String value) {
         Double index = null;

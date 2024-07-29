@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Route;
 import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -22,9 +23,11 @@ import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
+import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.ssl.TrustStrategy;
+import org.apache.hc.core5.util.TimeValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -150,6 +153,7 @@ public class application {
     public CloseableHttpAsyncClient AsyncClient() {
         CloseableHttpAsyncClient AsyncClient = null;
         try {
+
             SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(new TrustStrategy() {
                 @Override
                 public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
@@ -159,19 +163,37 @@ public class application {
             TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create().setSslContext(sslContext).build();
 
             PoolingAsyncClientConnectionManager pool = PoolingAsyncClientConnectionManagerBuilder.create()
+                    .setMaxConnTotal(200)
+                    .setMaxConnPerRoute(100)
                     .setTlsStrategy(tlsStrategy)
                     .build();
-            pool.setMaxTotal(MaxTotal);
-            pool.setDefaultMaxPerRoute(MaxTotal);
+
             List<Header> headers = new ArrayList<>();
             for (String key : HeadersMap.keySet()) {
                 headers.add(new BasicHeader(key, HeadersMap.get(key)));
             }
+
+            IOReactorConfig ioReactorConfig = IOReactorConfig.custom()
+                    .setSndBufSize(100*1024*1024)
+                    .setIoThreadCount(100)
+                    .build();
+            RequestConfig.custom();
+            RequestConfig config = RequestConfig.custom()
+                    .setConnectTimeout(3, TimeUnit.SECONDS)
+                    .setResponseTimeout(3, TimeUnit.SECONDS)
+                    .build();
+
+            DefaultHttpRequestRetryStrategy retryStrategy = new DefaultHttpRequestRetryStrategy(5,
+                    TimeValue.ofSeconds(200));
+
             AsyncClient = HttpAsyncClients.custom()
                     .setConnectionManager(pool)
+                    .setIOReactorConfig(ioReactorConfig)
                     .setDefaultHeaders(headers)
-                    // 可以根据需要设置请求配置，如超时等
+                    .setDefaultRequestConfig(config)
+                    .setRetryStrategy(retryStrategy)
                     .build();
+            AsyncClient.start();
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
             e.printStackTrace();
         }

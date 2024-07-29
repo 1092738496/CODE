@@ -1,6 +1,7 @@
 package com.meditation.pojo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @time: 2024/7/18 10:49
@@ -12,14 +13,25 @@ public class corporation {
     private List<List<String>> lists;
 
     private String alike;
+    private Map<String,Map<String,Integer>> data_transmit;
 
-    public corporation(com.meditation.pojo.overview overview, List<List<String>> lists, String alike) {
+    public corporation() {
+    }
+
+    public corporation(com.meditation.pojo.overview overview, List<List<String>> lists, String alike, Map<String,
+            Map<String, Integer>> data_transmit) {
         this.overview = overview;
         this.lists = lists;
         this.alike = alike;
+        this.data_transmit = data_transmit;
     }
 
-    public corporation() {
+    public com.meditation.pojo.overview getOverview() {
+        return overview;
+    }
+
+    public void setOverview(com.meditation.pojo.overview overview) {
+        this.overview = overview;
     }
 
     public List<List<String>> getLists() {
@@ -38,12 +50,12 @@ public class corporation {
         this.alike = alike;
     }
 
-    public com.meditation.pojo.overview getOverview() {
-        return overview;
+    public Map<String, Map<String, Integer>> getData_transmit() {
+        return data_transmit;
     }
 
-    public void setOverview(com.meditation.pojo.overview overview) {
-        this.overview = overview;
+    public void setData_transmit(Map<String, Map<String, Integer>> data_transmit) {
+        this.data_transmit = data_transmit;
     }
 
     @Override
@@ -52,6 +64,7 @@ public class corporation {
                 "overview=" + overview +
                 ", lists=" + lists +
                 ", alike='" + alike + '\'' +
+                ", data_transmit=" + data_transmit +
                 '}';
     }
 }

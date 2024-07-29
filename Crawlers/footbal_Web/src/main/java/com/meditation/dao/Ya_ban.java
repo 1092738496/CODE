@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @description:
  */
 @Component
-public class da2_ban {
+public class Ya_ban {
     @Autowired
     private com.meditation.utils.tools tools;
     @Autowired
@@ -37,7 +37,7 @@ public class da2_ban {
         LinkedHashMap<String, corporation> maps_s = new LinkedHashMap<>();
         String html = null;
         try {
-            html = httpUtils.get("https://vip.titan007.com/OverDown_n.aspx?id=" + id + "&t=1&l=0", "utf-8");
+            html = httpUtils.get("https://vip.titan007.com/AsianOdds_n.aspx?id=" + id + "&t=1&l=0", "utf-8");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -96,17 +96,19 @@ public class da2_ban {
             e.printStackTrace();
         }
         Elements select = Jsoup.parse(html).select("#odds2 > table > tbody > tr");
-        for (int i = 1; i < select.size(); i++) {
-            Element trs = select.get(i);
-            Elements tds = trs.select("td");
-            if (!tds.get(tds.size() - 1).text().equals("滚")) {
-                List<String> list = new ArrayList<>();
-                list.add(tds.get(tds.size() - 5).text());
-                list.add(tds.get(tds.size() - 4).text());
-                list.add(tds.get(tds.size() - 3).text());
-                list.add(tds.get(tds.size() - 2).text());
-                list.add(tds.get(tds.size() - 1).text());
-                lists.add(list);
+        if (select.size()!=0 & !select.isEmpty()) {
+            for (int i = 1; i < select.size(); i++) {
+                Element trs = select.get(i);
+                Elements tds = trs.select("td");
+                if (!tds.get(tds.size() - 1).text().equals("滚")) {
+                    List<String> list = new ArrayList<>();
+                    list.add(tds.get(tds.size() - 5).text());
+                    list.add(tds.get(tds.size() - 4).text());
+                    list.add(tds.get(tds.size() - 3).text());
+                    list.add(tds.get(tds.size() - 2).text());
+                    list.add(tds.get(tds.size() - 1).text());
+                    lists.add(list);
+                }
             }
         }
         return lists;

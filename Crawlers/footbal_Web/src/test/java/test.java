@@ -1,10 +1,17 @@
 import com.meditation.application;
+import com.meditation.dao.List_view_ji;
+import com.meditation.dao.List_view_zao;
 import com.meditation.service.Da_service;
 import com.meditation.service.Ya_service;
 import com.meditation.utils.httpUtils;
+import com.meditation.utils.tools;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
+import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
+import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.core5.concurrent.FutureCallback;
+import org.apache.hc.core5.http.Method;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @time: 2024/7/6 15:54
@@ -29,7 +38,7 @@ public class test {
     private CloseableHttpClient client;
 
     @Value("#{${headers:{}}}")
-    private Map<String,String> Headers;
+    private Map<String, String> Headers;
 
     @Autowired
     Page page;
@@ -37,8 +46,7 @@ public class test {
     @Autowired
     httpUtils httpUtil;
 
-    @Autowired
-    Playwright playwright;
+
     @Value("${Playwright.Headless}")
     private String Headless;
 
@@ -47,10 +55,10 @@ public class test {
     com.meditation.dao.xin xin;
 
     @Autowired
-    com.meditation.dao.ya ya;
+    com.meditation.dao.Ya ya;
 
     @Autowired
-    com.meditation.dao.da da;
+    com.meditation.dao.Da da;
 
     @Autowired
     Ya_service ya_service;
@@ -58,51 +66,87 @@ public class test {
     @Autowired
     Da_service da_service;
 
-    @Test
-    public void test4(){
-        System.out.println(ya_service.time_filtrate("2545223", "2024-07-10 03:00", 2));
+    @Autowired
+    List_view_ji list_view_ji;
 
-        /*da_service.Da_compute("2523056");*/
+    @Autowired
+    private CloseableHttpAsyncClient AsyncClient;
+
+
+    @Autowired
+    private List_view_zao list_view_zao;
+
+
+
+    @Test
+    public void test4() {
+       /* list_view_ji.List_ji();*/
+        list_view_zao.List_zao("2024-06-30");
     }
 
     @Test
-    public void test1(){
-       /* try {
-            String s = httpUtil.get("https://zq.titan007.com/analysis/2536566sb.htm", "utf-8");
-            System.out.println(Jsoup.parse(s).select("body > div.header > div.analyhead.new > div.vs > div:nth-child" +
-                    "(1) > a.LName"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+    public void test1() {
+        AsyncClient.start();
+        tools tools = new tools();
+        SimpleHttpRequest get = SimpleHttpRequest.create(Method.GET.name(), "https://1x2d" +
+                ".titan007.com/" + 2586473 + ".js");
+        Future<SimpleHttpResponse> execute = AsyncClient.execute(get, new FutureCallback<SimpleHttpResponse>() {
+            @Override
+            public void completed(SimpleHttpResponse result) {
+                String s1 = tools.regexStr1(result.getBodyText(), "game=Array\\(.*\\)").replaceAll("game=Array\\(",
+                        "").replaceAll("\\)", "");
+                System.out.println("--------------------------------------------");
+                String[] split = s1.split("\",\"");
+                System.out.println(split.length);
+                Double a = 0.0;
+                Double b = 0.0;
+                Double c = 0.0;
+                for (String s2 : split) {
+                    a += Double.parseDouble(s2.split("\\|")[10]);
+                    b += Double.parseDouble(s2.split("\\|")[11]);
+                    c += Double.parseDouble(s2.split("\\|")[12]);
+                }
+                System.out.println((Math.round(a / split.length * 100.0) / 100.0) + "-" + (Math.round(b / split.length * 100.0) / 100.0) + "-" + (Math.round(c / split.length * 100.0) / 100.0));
+            }
+
+            @Override
+            public void failed(Exception ex) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        });
+        try {
+            execute.get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-*/
-       xin.duisai_wangji("2511948");
-
-        playwright.close();
     }
 
     @Test
-    public void test2(){
+    public void test2() {
         ya.xiang_tongji("2591883");
-       /* ya.ji_zao("https://vip.titan007.com/changeDetail/handicap.aspx?id=2545220&companyID=19&l=0");*/
+        /* Ya.ji_zao("https://vip.titan007.com/changeDetail/handicap.aspx?id=2545220&companyID=19&l=0");*/
     }
 
     @Test
-    public void test3(){
+    public void test3() {
         List<List<String>> lists = new ArrayList<>();
-        lists.add(Arrays.asList("12","12","12","12-15 12:45"));
-        lists.add(Arrays.asList("11","11","11","11-15 12:45"));
-        lists.add(Arrays.asList("10","10","10","10-15 12:45"));
-        lists.add(Arrays.asList("9","9","9","9-15 12:45"));
-        lists.add(Arrays.asList("8","8","8","8-15 12:45"));
-        lists.add(Arrays.asList("7","7","7","7-8 19:25"));
-        lists.add(Arrays.asList("6","6","6","6-15 12:45"));
-        lists.add(Arrays.asList("5","5","5","5-15 12:45"));
-        lists.add(Arrays.asList("4","4","4","4-15 12:45"));
-        lists.add(Arrays.asList("3","3","3","3-15 12:45"));
-        lists.add(Arrays.asList("2","2","2","2-15 12:45"));
-        lists.add(Arrays.asList("1","1","1","1-15 12:45"));
+        lists.add(Arrays.asList("12", "12", "12", "12-15 12:45"));
+        lists.add(Arrays.asList("11", "11", "11", "11-15 12:45"));
+        lists.add(Arrays.asList("10", "10", "10", "10-15 12:45"));
+        lists.add(Arrays.asList("9", "9", "9", "9-15 12:45"));
+        lists.add(Arrays.asList("8", "8", "8", "8-15 12:45"));
+        lists.add(Arrays.asList("7", "7", "7", "7-8 19:25"));
+        lists.add(Arrays.asList("6", "6", "6", "6-15 12:45"));
+        lists.add(Arrays.asList("5", "5", "5", "5-15 12:45"));
+        lists.add(Arrays.asList("4", "4", "4", "4-15 12:45"));
+        lists.add(Arrays.asList("3", "3", "3", "3-15 12:45"));
+        lists.add(Arrays.asList("2", "2", "2", "2-15 12:45"));
+        lists.add(Arrays.asList("1", "1", "1", "1-15 12:45"));
         LocalDateTime localDateTime = LocalDateTime.of(2024, 7, 8, 23, 5);
 
         int i = ya_service.binary_search(lists, localDateTime);

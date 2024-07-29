@@ -16,36 +16,35 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 
+
 /**
- * @time: 2024/7/18 12:04
+ * @time: 2024/7/18 12:03
  * @description:
  */
 @Service
-public class Da_ban_service2 {
+public class Ya_service_zjg {
     private final DecimalFormat df = new DecimalFormat("#.##");
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d H:m");
-    private int currentYear = Year.now().getValue();
-
 
     @Autowired
     ThreadPoolExecutor pool;
 
     @Autowired
-    com.meditation.dao.da2_ban da_ban;
+    com.meditation.dao.Ya_zjg ya_zjg;
+
+    public LinkedHashMap<String, corporation> metadata(String sid){
+        //  long startTime1 = System.nanoTime();
+        LinkedHashMap<String, corporation> maps_s = ya_zjg.xiang_tongji(sid);
 
 
-
-    public  LinkedHashMap<String, corporation> Da_compute(String sid) {
-        //long startTime1 = System.nanoTime();
-        LinkedHashMap<String, corporation> maps_s = da_ban.xiang_tongji(sid);
-
-        /*long endTime1 = System.nanoTime();
+      /*  long endTime1 = System.nanoTime();
         long duration1 = endTime1 - startTime1;
         System.out.printf("请求,所花费时间: %.3f 毫秒%n", duration1 / 1_000_000.0);*/
         Map<String, String> mapz = new HashMap<>();
 
-        // long startTime = System.nanoTime();
+        //long startTime = System.nanoTime();
         for (String name : maps_s.keySet()) {
+
             List<CompletableFuture<List<String>>> futures = new ArrayList<>();
 
             //System.out.println(name);
@@ -95,10 +94,49 @@ public class Da_ban_service2 {
                 mapz.put(name, addition);
             }
             CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
             // 阻塞主线程，等待所有任务及其后续处理完成
             combinedFuture.join();
 
             mapx.clear();
+        }
+        return maps_s;
+    }
+    public LinkedHashMap<String, corporation> ya_compute(String sid) {
+        LinkedHashMap<String, corporation> maps_s = metadata(sid);
+        compute(maps_s);
+        return maps_s;
+    }
+    public void compute(LinkedHashMap<String, corporation> maps_s){
+        //需求2：找出公司之间前三条数据相同
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            alike(maps_s);
+        }, pool);
+        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+            corporation_calculate(maps_s);
+        }, pool);
+
+        //需求3：计算每家公司正负数级别
+        CompletableFuture.allOf(future, future1).join();
+    }
+
+    //需求2：找出公司之间前三条数据相同
+    public void alike(LinkedHashMap<String, corporation> maps_s){
+        Map<String, String> mapz = new HashMap<>();
+        for (String name : maps_s.keySet()) {
+            List<List<String>> lists = maps_s.get(name).getLists();
+            LinkedHashMap<String, corporation> mapx = new LinkedHashMap<>(maps_s);
+            mapx.remove(name);
+            //需求2：找出公司之间前三条数据相同，需要----------------------
+            String addition = "";
+            if (lists.size() >= 3) {
+                addition += lists.get(0).get(0) + "-" + lists.get(0).get(2) + " ";
+                addition += lists.get(1).get(0) + "-" + lists.get(1).get(2) + " ";
+                addition += lists.get(2).get(0) + "-" + lists.get(2).get(2) + " ";
+            }
+            if (!addition.equals("")) {
+                mapz.put(name, addition);
+            }
         }
         for (String name : mapz.keySet()) {
             String o = mapz.get(name);
@@ -114,21 +152,16 @@ public class Da_ban_service2 {
 
             String[] split = t.split(",");
             if (split.length > 1) {
-                maps_s.get(name).setAlike(t+",共"+split.length+"家,大小盘走势相同");
+                maps_s.get(name).setAlike(t + ",共" + split.length + "家,亚盘走势相同");
             }
-            //System.out.println("------------------------");
         }
-        // 计算并打印执行时间
-       /* long endTime = System.nanoTime();
-        long duration = endTime - startTime;
-        System.out.printf("计算,所花费时间: %.3f 毫秒%n", duration / 1_000_000.0);*/
-        return maps_s;
     }
 
+    int currentYear = Year.now().getValue();
 
-    private List<Double> mean_value( LinkedHashMap<String, corporation> mapx, String Thistime,
-                                     double z_subtrahend,
-                                     double k_subtrahend) {
+    private List<Double> mean_value(LinkedHashMap<String, corporation> mapx, String Thistime,
+                                    double z_subtrahend,
+                                    double k_subtrahend) {
         //System.out.println(Thistime);
         LocalDateTime localThistime = LocalDateTime.parse(currentYear + "-" + Thistime,
                 formatter);
@@ -146,26 +179,6 @@ public class Da_ban_service2 {
                 kdoubles.add(Double.parseDouble(lists.get(x).get(2)));
             }
 
-           /* for (int i = 0; i < lists.size(); i++) {
-                List<String> list = lists.get(i);
-                String b_time = list.get(3);
-                if (Thistime.equals(b_time)) {
-                    //System.out.println(list);
-                    zdoubles.add(Double.parseDouble(list.get(0)));
-                    kdoubles.add(Double.parseDouble(list.get(2)));
-                    break;
-                } else {
-                    LocalDateTime localThistime = LocalDateTime.parse(currentYear + "-" + Thistime,
-                            formatter);
-                    LocalDateTime localB_time = LocalDateTime.parse(currentYear + "-" + b_time, formatter);
-                    if (localB_time.isBefore(localThistime)) {
-                        //System.out.println(list);
-                        zdoubles.add(Double.parseDouble(list.get(0)));
-                        kdoubles.add(Double.parseDouble(list.get(2)));
-                        break;
-                    }
-                }
-            }*/
         }
         double Znum = zdoubles.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
         double Knum = kdoubles.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
@@ -180,6 +193,7 @@ public class Da_ban_service2 {
         int left = 0;
         int right = lists.size() - 1;
         int closestIndex = -1;
+
         if (lists.size() != 0) {
             if (targetDateTime.isAfter(LocalDateTime.parse(currentYear + "-" + lists.get(0).get(3), formatter))) {
                 return 0;
@@ -210,13 +224,141 @@ public class Da_ban_service2 {
         return closestIndex;
     }
 
+    //需求3：计算每家公司正负数级别
+    public void corporation_calculate(LinkedHashMap<String, corporation> maps_s) {
+        for (String key : maps_s.keySet()) {
+            corporation corporation = maps_s.get(key);
+            Map<String, Map<String, Integer>> data_transmit = new HashMap<>();
+            data_transmit.put("host", null);
+            data_transmit.put("guest", null);
+            Map<String, Integer> z_map = new HashMap<>();
+            Map<String, Integer> k_map = new HashMap<>();
+            int z_up = 0;
+            int k_up = 0;
+
+            int x = 1;
+            int xi = 0;
+            int y = 1;
+            int yi = 1;
+            boolean v = false;
+            boolean b = true;
+
+            int z_cun = 0;
+            int k_cun = 0;
+            List<List<String>> lists = corporation.getLists();
+            for (int i = lists.size() - 1; i >= 0; i--) {
+
+                List<String> list = lists.get(i);
+                double z = Double.parseDouble(list.get(5));
+                double k = Double.parseDouble(list.get(7));
+
+                if (z >= 0) {
+                    if (x == 0 & z_up >= 2) {
+                        if (z_map.size() != 0 & z_map.get(z_up + "级传递") != null) {
+                            z_map.put(z_up + "级传递", z_map.put(z_up + "级传递", 1) + 1);
+                            z_cun++;
+                        } else {
+                            z_map.put(z_up + "级传递", 1);
+                            z_cun++;
+                        }
+                    }
+                    z_up = 0;
+                    x++;
+                    xi = i;
+                    b = true;
+                } else if (b) {
+
+                    z_up++;
+
+                    if (z_up == 1) {
+                        double z_z_up = Math.abs(z);
+                        double va = Double.parseDouble(lists.get(xi).get(5));
+                        if (z_z_up <= va) {
+                            b = false;
+                            z_up = 0;
+                        }
+                    }
+                    if (i == 0) {
+                        if (z_up >= 2) {
+                            if (z_map.size() != 0 & z_map.get(z_up + "级传递") != null) {
+                                z_map.put(z_up + "级传递", z_map.put(z_up + "级传递", 1) + 1);
+                                z_cun++;
+                            } else {
+                                z_map.put(z_up + "级传递", 1);
+                                z_cun++;
+                            }
+                        }
+                    }
+                    x = 0;
+                }
+
+
+                //------------------
+                if (k >= 0) {
+                    if (y == 0 & k_up >= 2) {
+                        if (k_map.size() != 0 & k_map.get(k_up + "级传递") != null) {
+                            k_map.put(k_up + "级传递", k_map.put(k_up + "级传递", 1) + 1);
+                            k_cun++;
+                        } else {
+                            k_map.put(k_up + "级传递", 1);
+                            k_cun++;
+                        }
+                    }
+                    k_up = 0;
+                    y++;
+                    yi = i;
+                    v = true;
+                } else if (v) {
+                    k_up++;
+
+                    if (k_up == 1) {
+                        double k_k_up = Math.abs(k);
+                        double va = Double.parseDouble(lists.get(yi).get(7));
+                        if (k_k_up <= va) {
+                            v = false;
+                            k_up = 0;
+                        }
+                    }
+                    if (i == 0) {
+                        if (k_up >= 2) {
+                            if (k_map.size() != 0 & k_map.get(k_up + "级传递") != null) {
+                                k_map.put(k_up + "级传递", k_map.put(k_up + "级传递", 1) + 1);
+                                k_cun++;
+                            } else {
+                                k_map.put(k_up + "级传递", 1);
+                                k_cun++;
+                            }
+                        }
+                    }
+                    y = 0;
+                }
+            }
+
+            //System.out.println(key + "| Z总数：" + z_cun + " - K总是：" + k_cun);
+            if (z_cun >= 2) {
+                if (!(z_map.size() <= 1 & z_map.get("2级传递") != null)) {
+                    data_transmit.put("host", z_map);
+                }
+            }
+
+            if (k_cun >= 2) {
+                if (!(k_map.size() <= 1 & k_map.get("2级传递") != null)) {
+                    data_transmit.put("guest", k_map);
+                }
+            }
+            maps_s.get(key).setData_transmit(data_transmit);
+        }
+    }
+
+
     public LinkedHashMap<String, corporation> time_filtrate(String id, String timeStr, int hour) {
         LocalDateTime thisTime = LocalDateTime.parse(timeStr, formatter);
         LocalDateTime minusTime = thisTime.minusHours(hour);
         //System.out.println(timeStr);
         //System.out.println(minusTime);
 
-        LinkedHashMap<String, corporation> maps_s = this.Da_compute(id);
+        LinkedHashMap<String, corporation> maps_s = metadata(id);
+        // long startTime = System.nanoTime();
         for (String name : maps_s.keySet()) {
             //System.out.println(name);
             List<List<String>> lists = maps_s.get(name).getLists();
@@ -232,6 +374,10 @@ public class Da_ban_service2 {
             }
             //System.out.println("----------------------------------------");
         }
+        compute(maps_s);
+       /* long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.printf("过滤,所花费时间: %.3f 毫秒%n", duration / 1_000_000.0);*/
         return maps_s;
     }
 }

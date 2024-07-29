@@ -2,6 +2,7 @@ package com.meditation.dao;
 
 import com.meditation.pojo.corporation;
 import com.meditation.pojo.overview;
+import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.core5.http.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -21,7 +22,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @description:
  */
 @Component
-public class Da {
+public class Da_zjg_ban {
     @Autowired
     private com.meditation.utils.tools tools;
     @Autowired
@@ -29,14 +30,18 @@ public class Da {
     @Autowired
     com.meditation.utils.httpUtils httpUtils;
 
+    @Autowired
+    CloseableHttpAsyncClient asyncClient;
+
     public LinkedHashMap<String, corporation> xiang_tongji(String id) {
         LinkedHashMap<String, corporation> maps_s = new LinkedHashMap<>();
         String html = null;
         try {
-            html = httpUtils.get("https://vip.titan007.com/OverDown_n.aspx?id=" + id, "utf-8");
+            html = httpUtils.get("https://vip.titan007.com/OverDown_n.aspx?id=" + id + "&t=1&l=0", "utf-8");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
         Elements trs = Jsoup.parse(html).select("#odds > tbody > tr");
         /*boolean zhong = !Jsoup.parse(html).select("#selectT").isEmpty();
         System.out.println(zhong);*/
@@ -66,6 +71,7 @@ public class Da {
                             //System.out.println(url);
                             corporation corporation = new corporation();
                             corporation.setOverview(overview);
+
                             corporation.setLists(ji_zao(url));
                             maps_s.put(name, corporation);
                         }, pool);
@@ -90,11 +96,11 @@ public class Da {
             e.printStackTrace();
         }
         Elements select = Jsoup.parse(html).select("#odds2 > table > tbody > tr");
-        if (select.size()!=0) {
+        if (select.size()!=0 & !select.isEmpty()) {
             for (int i = 1; i < select.size(); i++) {
                 Element trs = select.get(i);
                 Elements tds = trs.select("td");
-                if (!tds.get(tds.size() - 1).text().equals("滚")) {
+                if (!tds.get(tds.size() - 3).text().equals("封")) {
                     List<String> list = new ArrayList<>();
                     list.add(tds.get(tds.size() - 5).text());
                     list.add(tds.get(tds.size() - 4).text());

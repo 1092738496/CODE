@@ -57,7 +57,6 @@ public class xin {
         try {
             page.navigate("https://zq.titan007.com/analysis/" + sid + "cn.htm");
         } catch (Exception e) {
-            page.close();
             browserContext.close();
             browserContext = (BrowserContext) context.getBean("BrowserContext");
             page = browserContext.newPage();
@@ -100,6 +99,8 @@ public class xin {
                 map.put("主队不分主客全赛事胜率", G + "%");
                 map.put("主队不分主客全赛事赢率", H + "%");
             } else {
+                G=0.0;
+                H=0.0;
                 map.put("主队不分主客全赛事胜率", "");
                 map.put("主队不分主客全赛事赢率", "");
             }
@@ -121,6 +122,8 @@ public class xin {
             } else {
                 map.put("客队不分主客全赛事胜率", "");
                 map.put("客队不分主客全赛事赢率", "");
+                I = 0.0;
+                J = 0.0;
             }
 
 
@@ -157,6 +160,8 @@ public class xin {
             } else {
                 map.put("主队同主全赛事胜率", "");
                 map.put("主队同主全赛事赢率", "");
+                K = 0.0;
+                L = 0.0;
             }
             String ktj2 = "null";
             if (a_index >= 2) {
@@ -174,6 +179,8 @@ public class xin {
             } else {
                 map.put("客队同客全赛事胜率", "");
                 map.put("客队同客全赛事赢率", "");
+                M = 0.0;
+                N = 0.0;
             }
             //-------------------------------------------------------------------
 
@@ -204,14 +211,16 @@ public class xin {
                     }
                     lists.add(list1);
                            /* String s =
-                                    elementHandles.get(i).querySelector("td:nth-child(4) > a").textContent().split("-")[0];
+                                    elementHandles.get(i).querySelector("td:nth-child(4) > a").textContent().split
+                                    ("-")[0];
                             list.add(Double.parseDouble(s));*/
                 }
                 About_5_shows.put("home_team", lists);
 
 
                         /*map.put("主队同客全赛事近5场平均值",
-                                df.format(list.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN)));*/
+                                df.format(list.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN)
+                                ));*/
             }
             if (a_index >= 2) {
 
@@ -237,33 +246,28 @@ public class xin {
                     }
                     lists.add(list1);
                             /*String s =
-                                    elementHandles.get(i).querySelector("td:nth-child(4) > a").textContent().split("-")[1];
+                                    elementHandles.get(i).querySelector("td:nth-child(4) > a").textContent().split
+                                    ("-")[1];
                             list.add(Double.valueOf(s));*/
                 }
                 About_5_shows.put("visiting_team", lists);
                       /*  map.put("客队同客全赛事近5场平均值",
-                                df.format(list.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN)));*/
+                                df.format(list.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN)
+                                ));*/
             }
 
            /* System.out.println(z_listq + "-" + z_listb);
             System.out.println(k_listq + "-" + k_listb);*/
             map.put("全场", "");
             map.put("半场", "");
-            String zh = "主近3场：%q球; 客近3场：%w球; 主近5场：%a球; 客近5场：%b球; 近3场：%e球; 近5场：%c球";
-            String kh = "主近3半场：%g球; 客近3半场：%h球; 主近5半场：%z球; 客近5半场：%x球; 近3半场：%j球; 近5半场：%v球";
+            String zh = "主近3场：%q球； 客近3场：%w球； 主近5场：%a球； 客近5场：%b球； 近3场：%e球； 近5场：%c球；";
+            String kh = "主近3半场：%g球； 客近3半场：%h球； 主近5半场：%z球； 客近5半场：%x球； 近3半场：%j球； 近5半场：%v球；";
             if (z_listq.size() == 5 && k_listq.size() == 5) {
                 double z5ping = z_listq.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
                 double k5ping = k_listq.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
                 double z5pingb = z_listb.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
                 double k5pingb = k_listb.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
-                   /* z_listq.remove(z_listq.size() - 1);
-                    z_listq.remove(z_listq.size() - 1);
-                    k_listq.remove(k_listq.size() - 1);
-                    k_listq.remove(k_listq.size() - 1);
-                    z_listb.remove(z_listb.size() - 1);
-                    z_listb.remove(z_listb.size() - 1);
-                    k_listb.remove(k_listb.size() - 1);
-                    k_listb.remove(k_listb.size() - 1);*/
+
                 zh = zh.replace("%a", df.format(z5ping));
                 zh = zh.replace("%b", df.format(k5ping));
                 zh = zh.replace("%c", df.format(z5ping + k5ping));
@@ -271,8 +275,8 @@ public class xin {
                 kh = kh.replace("%x", df.format(k5pingb));
                 kh = kh.replace("%v", df.format(z5pingb + k5pingb));
             } else {
-                zh = zh.replace("主近5场：%a球; 客近5场：%b球;", "").replace("近5场：%c球", "");
-                kh = kh.replace("主近5半场：%z球; 客近5半场：%x球;", "").replace("近5半场：%v球", "");
+                zh = zh.replace("主近5场：%a球； 客近5场：%b球；", "").replace("近5场：%c球；", "");
+                kh = kh.replace("主近5半场：%z球； 客近5半场：%x球；", "").replace("近5半场：%v球；", "");
             }
 
             while (z_listq.size() > 3) {
@@ -297,8 +301,8 @@ public class xin {
                 kh = kh.replace("%h", df.format(k3pingb));
                 kh = kh.replace("%j", df.format(z3pingb + k3pingb));
             } else {
-                zh = zh.replace("主近3场：%q球; 客近3场：%w球;", "").replace("近3场：%e球;", "");
-                kh = kh.replace("主近3半场：%g球; 客近3半场：%h球;", "").replace("近3半场：%j球;", "");
+                zh = zh.replace("主近3场：%q球； 客近3场：%w球；", "").replace("近3场：%e球；", "");
+                kh = kh.replace("主近3半场：%g球； 客近3半场：%h球；", "").replace("近3半场：%j球；", "");
 
             }
             map.put("全场", zh.trim());
@@ -338,6 +342,8 @@ public class xin {
                 map.put("主队同主本赛事胜率", O + "%");
                 map.put("主队同主本赛事赢率", P + "%");
             } else {
+                O = 0.0;
+                P = 0.0;
                 map.put("主队同主本赛事胜率", "");
                 map.put("主队同主本赛事赢率", "");
             }
@@ -369,6 +375,8 @@ public class xin {
                 map.put("客队同客本赛事胜率", Q + "%");
                 map.put("客队同客本赛事赢率", R + "%");
             } else {
+                Q = 0.0;
+                R = 0.0;
                 map.put("客队同客本赛事胜率", "");
                 map.put("客队同客本赛事赢率", "");
             }
@@ -424,7 +432,9 @@ public class xin {
 
             tong_ke.setMaps(map);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            browserContext.close();
+            browserContext = (BrowserContext) context.getBean("BrowserContext");
+            page = browserContext.newPage();
         }
 
         return tong_ke;

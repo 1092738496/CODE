@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @description:
  */
 @Component
-public class Da {
+public class Da_zjg {
     @Autowired
     private com.meditation.utils.tools tools;
     @Autowired
@@ -90,11 +90,11 @@ public class Da {
             e.printStackTrace();
         }
         Elements select = Jsoup.parse(html).select("#odds2 > table > tbody > tr");
-        if (select.size()!=0) {
+        if (select.size()!=0 & !select.isEmpty()) {
             for (int i = 1; i < select.size(); i++) {
                 Element trs = select.get(i);
                 Elements tds = trs.select("td");
-                if (!tds.get(tds.size() - 1).text().equals("滚")) {
+                if (!tds.get(tds.size() - 3).text().equals("封")) {
                     List<String> list = new ArrayList<>();
                     list.add(tds.get(tds.size() - 5).text());
                     list.add(tds.get(tds.size() - 4).text());

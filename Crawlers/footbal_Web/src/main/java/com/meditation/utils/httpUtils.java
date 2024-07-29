@@ -33,6 +33,7 @@ public class httpUtils {
         HttpGet httpGet = new HttpGet(url);
 
         CloseableHttpResponse response = httpclient.execute(httpGet);
+
         // 读取整个响应体
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
                 Charset))) {
@@ -43,6 +44,8 @@ public class httpUtils {
             }
             html = responseBody.toString();
         }
+        response.close();
+
         //html = EntityUtils.toString(response.getEntity());
         return html;
     }
