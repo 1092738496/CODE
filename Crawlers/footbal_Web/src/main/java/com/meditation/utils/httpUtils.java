@@ -44,9 +44,27 @@ public class httpUtils {
             }
             html = responseBody.toString();
         }
-        response.close();
+
 
         //html = EntityUtils.toString(response.getEntity());
+        return html;
+    }
+
+    public String get(String url) throws IOException, ParseException {
+        String html = "";
+        HttpGet httpGet = new HttpGet(url);
+
+        CloseableHttpResponse response = httpclient.execute(httpGet);
+
+        // 读取整个响应体
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()))) {
+            StringBuilder responseBody = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                responseBody.append(line);
+            }
+            html = responseBody.toString();
+        }
         return html;
     }
 

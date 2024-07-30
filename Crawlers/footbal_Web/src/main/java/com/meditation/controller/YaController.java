@@ -1,7 +1,9 @@
 package com.meditation.controller;
 
 import com.meditation.pojo.corporation;
+import com.meditation.pojo.sfp;
 import com.meditation.service.Ya_ban_service;
+import com.meditation.service.Ya_sfp_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,9 @@ public class YaController {
     @Autowired
     Ya_ban_service ya_ban_service;
 
+    @Autowired
+    Ya_sfp_service ya_sfp_service;
+
 
     @RequestMapping(value = "/ya2/{sid}", method = RequestMethod.GET)
     LinkedHashMap<String, corporation> Ya2(@PathVariable String sid,
@@ -48,17 +53,17 @@ public class YaController {
             } else {
                 maps_s = Ya_service.ya_compute(sid);
             }
-        }else if(t.equals("1")){
-            if (time != null & hour != null){
+        } else if (t.equals("1")) {
+            if (time != null & hour != null) {
                 maps_s = ya_ban_service.time_filtrate(sid, time, Integer.parseInt(hour));
-            } else{
+            } else {
                 maps_s = ya_ban_service.ya_compute(sid);
             }
         }
 
-            if (LocalDate.now().isAfter(of)) {
-                throw new NullPointerException();
-            }
+        if (LocalDate.now().isAfter(of)) {
+            throw new NullPointerException();
+        }
         return maps_s;
     }
 
@@ -77,6 +82,12 @@ public class YaController {
             throw new NullPointerException();
         }
         return maps_s;
+    }
+
+
+    @RequestMapping(value = "/ya_sfp/{sid}", method = RequestMethod.GET)
+    sfp Ya_sfp(@PathVariable String sid) {
+        return ya_sfp_service.metadata(sid);
     }
 
 

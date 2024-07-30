@@ -241,7 +241,7 @@ public class Ya_service_zjg {
             int y = 1;
             int yi = 1;
             boolean v = false;
-            boolean b = true;
+            boolean b = false;
 
             int z_cun = 0;
             int k_cun = 0;

@@ -239,7 +239,6 @@ public class Ya_ban_service {
         // 但为了逻辑的完整性，这里应该不会发生
         return closestIndex;
     }
-    //需求3：计算每家公司正负数级别
     public void corporation_calculate(LinkedHashMap<String, corporation> maps_s) {
         for (String key : maps_s.keySet()) {
             corporation corporation = maps_s.get(key);
@@ -256,10 +255,13 @@ public class Ya_ban_service {
             int y = 1;
             int yi = 1;
             boolean v = false;
-            boolean b = true;
+            boolean b = false;
 
             int z_cun = 0;
             int k_cun = 0;
+
+            int z_big4 = 0;
+            int k_big4 = 0;
             List<List<String>> lists = corporation.getLists();
             for (int i = lists.size() - 1; i >= 0; i--) {
 
@@ -267,14 +269,24 @@ public class Ya_ban_service {
                 double z = Double.parseDouble(list.get(5));
                 double k = Double.parseDouble(list.get(7));
 
-                if (z >= 0) {
+                if (z > 0) {
                     if (x == 0 & z_up >= 2) {
                         if (z_map.size() != 0 & z_map.get(z_up + "级传递") != null) {
                             z_map.put(z_up + "级传递", z_map.put(z_up + "级传递", 1) + 1);
-                            z_cun++;
+                            if (z_up >= 4) {
+                                z_big4++;
+                            }
+                            if(z_up >= 2){
+                                z_cun++;
+                            }
                         } else {
                             z_map.put(z_up + "级传递", 1);
-                            z_cun++;
+                            if (z_up >= 4) {
+                                z_big4++;
+                            }
+                            if(z_up >= 2){
+                                z_cun++;
+                            }
                         }
                     }
                     z_up = 0;
@@ -282,8 +294,9 @@ public class Ya_ban_service {
                     xi = i;
                     b = true;
                 } else if (b) {
-
-                    z_up++;
+                    if (z != 0) {
+                        z_up++;
+                    }
 
                     if (z_up == 1) {
                         double z_z_up = Math.abs(z);
@@ -293,14 +306,25 @@ public class Ya_ban_service {
                             z_up = 0;
                         }
                     }
+
                     if (i == 0) {
                         if (z_up >= 2) {
                             if (z_map.size() != 0 & z_map.get(z_up + "级传递") != null) {
                                 z_map.put(z_up + "级传递", z_map.put(z_up + "级传递", 1) + 1);
-                                z_cun++;
+                                if (z_up >= 4) {
+                                    z_big4++;
+                                }
+                                if(z_up >= 2){
+                                    z_cun++;
+                                }
                             } else {
                                 z_map.put(z_up + "级传递", 1);
-                                z_cun++;
+                                if (z_up >= 4) {
+                                    z_big4++;
+                                }
+                                if(z_up >= 2){
+                                    z_cun++;
+                                }
                             }
                         }
                     }
@@ -309,14 +333,24 @@ public class Ya_ban_service {
 
 
                 //------------------
-                if (k >= 0) {
+                if (k > 0) {
                     if (y == 0 & k_up >= 2) {
-                        if (k_map.size() != 0 & k_map.get(k_up + "级传递") != null) {
+                        if (k_map.size() != 0 && k_map.get(k_up + "级传递") != null) {
                             k_map.put(k_up + "级传递", k_map.put(k_up + "级传递", 1) + 1);
-                            k_cun++;
+                            if (k_up >= 2) {
+                                k_cun++;
+                            }
+                            if (k_up >= 4) {
+                                k_big4++;
+                            }
                         } else {
                             k_map.put(k_up + "级传递", 1);
-                            k_cun++;
+                            if (k_up >= 2) {
+                                k_cun++;
+                            }
+                            if (k_up >= 4) {
+                                k_big4++;
+                            }
                         }
                     }
                     k_up = 0;
@@ -324,7 +358,9 @@ public class Ya_ban_service {
                     yi = i;
                     v = true;
                 } else if (v) {
-                    k_up++;
+                    if (k != 0) {
+                        k_up++;
+                    }
 
                     if (k_up == 1) {
                         double k_k_up = Math.abs(k);
@@ -336,12 +372,22 @@ public class Ya_ban_service {
                     }
                     if (i == 0) {
                         if (k_up >= 2) {
-                            if (k_map.size() != 0 & k_map.get(k_up + "级传递") != null) {
+                            if (k_map.size() != 0 && k_map.get(k_up + "级传递") != null) {
                                 k_map.put(k_up + "级传递", k_map.put(k_up + "级传递", 1) + 1);
-                                k_cun++;
+                                if (k_up >= 2) {
+                                    k_cun++;
+                                }
+                                if (k_up >= 4) {
+                                    k_big4++;
+                                }
                             } else {
                                 k_map.put(k_up + "级传递", 1);
-                                k_cun++;
+                                if (k_up >= 2) {
+                                    k_cun++;
+                                }
+                                if (k_up >= 4) {
+                                    k_big4++;
+                                }
                             }
                         }
                     }
@@ -349,15 +395,25 @@ public class Ya_ban_service {
                 }
             }
 
-            //System.out.println(key + "| Z总数：" + z_cun + " - K总是：" + k_cun);
+            System.out.println(key + "| Z总数：" + z_cun + " - K总是：" + k_cun);
+            System.out.println(z_big4);
+
             if (z_cun >= 2) {
-                if (!(z_map.size() <= 1 & z_map.get("2级传递") != null)) {
+                if (!(z_map.size() == 1 & z_map.get("2级传递") != null)) {
+                    data_transmit.put("host", z_map);
+                }
+            }else if(z_cun == 1){
+                if (z_big4>=1){
                     data_transmit.put("host", z_map);
                 }
             }
 
             if (k_cun >= 2) {
                 if (!(k_map.size() <= 1 & k_map.get("2级传递") != null)) {
+                    data_transmit.put("guest", k_map);
+                }
+            }else if(k_cun == 1){
+                if (k_big4>=1){
                     data_transmit.put("guest", k_map);
                 }
             }

@@ -17,10 +17,12 @@ import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
 import org.apache.hc.core5.reactor.IOReactorConfig;
@@ -129,14 +131,17 @@ public class application {
             pool.setMaxTotal(MaxTotal);
             pool.setDefaultMaxPerRoute(MaxTotal);
             logger.info("当前客户端连接次数:" + MaxTotal);
+
             //连接参数
-            RequestConfig requestConfig = RequestConfig.custom()
-                    .setResponseTimeout(10, TimeUnit.SECONDS)
-                    .setConnectTimeout(10, TimeUnit.SECONDS)
-                    .setConnectionRequestTimeout(20, TimeUnit.SECONDS)
+            RequestConfig config = RequestConfig.custom()
+                    .setConnectTimeout(3, TimeUnit.SECONDS)
+                    .setResponseTimeout(3, TimeUnit.SECONDS)
                     .build();
 
-            httpClientBuilder = HttpClients.custom().setConnectionManager(pool);
+            DefaultHttpRequestRetryStrategy retryStrategy = new DefaultHttpRequestRetryStrategy(5,
+                    TimeValue.ofSeconds(200));
+            httpClientBuilder = HttpClients.custom().setConnectionManager(pool).setDefaultRequestConfig(config)
+                    .setRetryStrategy(retryStrategy);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,7 +179,7 @@ public class application {
             }
 
             IOReactorConfig ioReactorConfig = IOReactorConfig.custom()
-                    .setSndBufSize(100*1024*1024)
+                    .setSndBufSize(100 * 1024 * 1024)
                     .setIoThreadCount(100)
                     .build();
             RequestConfig.custom();
@@ -192,6 +197,7 @@ public class application {
                     .setDefaultHeaders(headers)
                     .setDefaultRequestConfig(config)
                     .setRetryStrategy(retryStrategy)
+                    .setRoutePlanner(new DefaultProxyRoutePlanner(new HttpHost("127.0.0.1", 7890)))
                     .build();
             AsyncClient.start();
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
@@ -206,7 +212,6 @@ public class application {
 
         return new ThreadPoolExecutor(codepoolsize, maximunpoolsize, 60, TimeUnit.SECONDS, taskQueue);
     }
-
 
 
     @Bean("BrowserContext")
@@ -224,17 +229,16 @@ public class application {
                 .setIgnoreHTTPSErrors(true));
         // 禁止图片加载
         browserContext.route("**/*.{png,jpg,jpeg,webp,avif,svg}", Route::abort);
-       /* Page page = browserContext.newPage();*/
+        /* Page page = browserContext.newPage();*/
         logger.info("playwright初始化完成");
         return browserContext;
     }
 
     @Bean("Page")
-    public Page page (BrowserContext browserContext){
+    public Page page(BrowserContext browserContext) {
 
         return browserContext.newPage();
     }
-
 
 
     public static void main(String[] args) {
