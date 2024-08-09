@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -100,42 +101,29 @@ public class test {
 
     @Test
     public void test1() {
-        AsyncClient.start();
-        tools tools = new tools();
-        SimpleHttpRequest get = SimpleHttpRequest.create(Method.GET.name(), "https://1x2d" +
-                ".titan007.com/" + 2586473 + ".js");
+        CountDownLatch latch = new CountDownLatch(100);
+        SimpleHttpRequest get = SimpleHttpRequest.create(Method.GET.name(), "http://125.122.20.253:9527/rateServer/xin/2642337");
         Future<SimpleHttpResponse> execute = AsyncClient.execute(get, new FutureCallback<SimpleHttpResponse>() {
             @Override
             public void completed(SimpleHttpResponse result) {
-                String s1 = tools.regexStr1(result.getBodyText(), "game=Array\\(.*\\)").replaceAll("game=Array\\(",
-                        "").replaceAll("\\)", "");
-                System.out.println("--------------------------------------------");
-                String[] split = s1.split("\",\"");
-                System.out.println(split.length);
-                Double a = 0.0;
-                Double b = 0.0;
-                Double c = 0.0;
-                for (String s2 : split) {
-                    a += Double.parseDouble(s2.split("\\|")[10]);
-                    b += Double.parseDouble(s2.split("\\|")[11]);
-                    c += Double.parseDouble(s2.split("\\|")[12]);
-                }
-                System.out.println((Math.round(a / split.length * 100.0) / 100.0) + "-" + (Math.round(b / split.length * 100.0) / 100.0) + "-" + (Math.round(c / split.length * 100.0) / 100.0));
+                System.out.println(latch.getCount());
+                latch.countDown();
+                System.out.println(result.getBodyText());
             }
 
             @Override
             public void failed(Exception ex) {
-
+                latch.countDown();
             }
 
             @Override
             public void cancelled() {
-
+                latch.countDown();
             }
         });
         try {
-            execute.get();
-        } catch (InterruptedException | ExecutionException e) {
+            latch.await();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -294,7 +282,7 @@ public class test {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
-
     }
+
+
 }

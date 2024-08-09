@@ -3,8 +3,7 @@ server:
 
 
 headers: "{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123
-.0.0.0 Safari/537.36','Referer': 'https://live.titan007.com/oldIndexall.aspx','Accept-Charset':'utf-8',
-'Content-Type':'text/html; charset=utf-8'}"
+.0.0.0 Safari/537.36','Referer': 'https://live.titan007.com/oldIndexall.aspx'}"
 
 Playwright:
   Headless: true

@@ -1,5 +1,6 @@
 package com.meditation.dao;
 
+import com.meditation.pojo.data_list;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -33,10 +35,10 @@ public class List_view_ji {
 
     @Autowired
     private CloseableHttpAsyncClient AsyncClient;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    public  LinkedList<data_list> List_ji() {
 
-    public LinkedList<LinkedList<String>> List_ji() {
-
-        LinkedList<LinkedList<String>> linkedLists = new LinkedList<>();
+        LinkedList<data_list> linkedLists = new LinkedList<>();
         try {
 
             long timestampInSeconds = Instant.now().getEpochSecond();
@@ -57,7 +59,7 @@ public class List_view_ji {
             String[] splitA = sA.split(".split\\('\\^'\\);");
             CountDownLatch latch = new CountDownLatch(splitA.length);
             for (int i = 0; i < splitA.length; i++) {
-                LinkedList<String> list = new LinkedList<>();
+                //LinkedList<String> list = new LinkedList<>();
                 String s2 = tools.regexStr1(splitA[i], "A\\[\\d*]=.*").replaceAll("A\\[.*\\]=\"", "").replaceAll("\"",
                         "");
                 String[] A = s2.split("\\^");
@@ -66,15 +68,33 @@ public class List_view_ji {
                 Z = A[5].contains("(中)") ? Z + "(中)" : Z;
                 K = A[8].contains("(中)") ? K + "(中)" : K;
 
-                list.add(A[0]);
+                /*list.add(A[0]);
                 list.add(A[43] + "-" + A[36]);
                 list.add(A[2]);
                 list.add(A[11]);
                 list.add(Z);
                 list.add(A[14] + "-" + A[15]);
                 list.add(K);
-                list.add(A[16] + "-" + A[17]);
-                linkedLists.add(list);
+                list.add(A[16] + "-" + A[17]);*/
+
+                data_list data_list = new data_list();
+                data_list.setId(A[0]);
+
+                /*LocalTime time = LocalTime.parse(A[11], formatter);
+                String thistime = LocalTime.now().toString().replaceAll(":(\\d{2}\\..*)", "");
+                LocalTime parse = LocalTime.parse(thistime, formatter);
+                int x = time.compareTo(parse);*/
+                int x = Integer.parseInt(A[13]);
+                data_list.setTime(A[11]);
+                data_list.setDate(A[43] + "-" + A[36] +" "+A[11]+":00");
+                data_list.setLeague(A[2]);
+                data_list.setHomeTeam(Z);
+                data_list.setVisitingTeam(K);
+                data_list.setScore(x > 0 ? A[14] + "-" + A[15]:"-");
+                data_list.setBscore(A[16] + "-" + A[17]);
+                data_list.setMatchType("即时");
+                data_list.setOrderNum(i);
+                linkedLists.add(data_list);
 
 
                 String AsyncUrl = "https://1x2d.titan007.com/" + A[0] + ".js";
@@ -85,9 +105,9 @@ public class List_view_ji {
                             @Override
                             public void completed(SimpleHttpResponse result) {
                                 String[] move = move1(result.getBodyText());
-                                linkedLists.get(finalI).add(move[0]);
-                                linkedLists.get(finalI).add(move[1]);
-                                linkedLists.get(finalI).add(move[2]);
+                                linkedLists.get(finalI).setZ_forthwith_mean(move[0]);
+                                linkedLists.get(finalI).setH_forthwith_mean(move[1]);
+                                linkedLists.get(finalI).setK_forthwith_mean(move[2]);
 
                                 latch.countDown();
 
@@ -95,6 +115,7 @@ public class List_view_ji {
 
                             @Override
                             public void failed(Exception ex) {
+                                System.out.println(ex.getMessage());
                                 latch.countDown();
                             }
 
@@ -114,7 +135,7 @@ public class List_view_ji {
     private String[] move1(String html) {
         String s1 = tools.regexStr1(html, "game=Array\\(.*\\)").replaceAll("game" + "=Array\\" +
                 "(", "").replaceAll("\\)", "");
-        ;
+
         String[] Strings = new String[3];
         Strings[0] = "";
         Strings[1] = "";

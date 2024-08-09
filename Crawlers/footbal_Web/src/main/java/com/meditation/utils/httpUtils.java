@@ -65,6 +65,7 @@ public class httpUtils {
             }
             html = responseBody.toString();
         }
+        response.close();
         return html;
     }
 

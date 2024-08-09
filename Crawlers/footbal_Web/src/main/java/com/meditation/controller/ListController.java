@@ -1,5 +1,6 @@
 package com.meditation.controller;
 
+import com.meditation.pojo.data_status;
 import com.meditation.service.List_view_Ji_service;
 import com.meditation.service.List_view_zao_service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 
 /**
  * @time: 2024/7/27 19:32
@@ -26,7 +26,7 @@ public class ListController {
     List_view_zao_service list_view_zao_service;
 
     @RequestMapping(value = "/list/ji", method = RequestMethod.GET)
-    LinkedList<LinkedList<String>> ji() {
+    data_status ji() {
         if (LocalDate.now().isAfter(of)) {
             throw new NullPointerException();
         }
@@ -34,7 +34,7 @@ public class ListController {
     }
 
     @RequestMapping(value = "/list/zao", method = RequestMethod.GET)
-    LinkedList<LinkedList<String>> zao(@RequestParam(required = false, value = "date") String date) {
+    data_status zao(@RequestParam(required = false, value = "date") String date) {
         if (LocalDate.now().isAfter(of)) {
             throw new NullPointerException();
         }

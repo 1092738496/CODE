@@ -1,5 +1,6 @@
 package com.meditation.dao;
 
+import com.meditation.pojo.data_list;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -38,8 +39,8 @@ public class List_view_zao {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public LinkedList<LinkedList<String>> List_zao(String date) {
-        LinkedList<LinkedList<String>> lists = new LinkedList<>();
+    public  LinkedList<data_list> List_zao(String date) {
+        LinkedList<data_list> lists = new LinkedList<>();
         String html = null;
         try {
             String url = "https://bf.titan007.com/football/Over_" + date.replaceAll("-", "") + ".htm";
@@ -59,18 +60,18 @@ public class List_view_zao {
 
         CountDownLatch latch = new CountDownLatch(lists.size());
         for (int i = 0; i < lists.size(); i++) {
-            LinkedList<String> list = lists.get(i);
+            data_list data_list = lists.get(i);
 
-            String AsyncUrl = "https://1x2d.titan007.com/" + list.get(0) + ".js";
+            String AsyncUrl = "https://1x2d.titan007.com/" + data_list.getId() + ".js";
             SimpleHttpRequest get = SimpleHttpRequest.create(Method.GET.name(), AsyncUrl);
             int finalI = i;
             AsyncClient.execute(get, new FutureCallback<SimpleHttpResponse>() {
                 @Override
                 public void completed(SimpleHttpResponse result) {
                     String[] move = move1(result.getBodyText());
-                    lists.get(finalI).add(move[0]);
-                    lists.get(finalI).add(move[1]);
-                    lists.get(finalI).add(move[2]);
+                    lists.get(finalI).setZ_forthwith_mean(move[0]);
+                    lists.get(finalI).setH_forthwith_mean(move[1]);
+                    lists.get(finalI).setK_forthwith_mean(move[2]);
                    // System.out.println("count:" + latch.getCount());
 
                     latch.countDown();
@@ -95,59 +96,92 @@ public class List_view_zao {
         return lists;
     }
 
-    public LinkedList<LinkedList<String>> Over(String html, String date) {
+    public  LinkedList<data_list> Over(String html, String date) {
         LocalDate parse = LocalDate.parse(date, formatter);
         Elements trs = Jsoup.parse(html).select("#table_live > tbody > tr");
-        LinkedList<LinkedList<String>> lists = new LinkedList<>();
+        LinkedList<data_list> lists = new LinkedList<>();
+        int i = 0;
         for (Element tr : trs) {
             String sid = tr.attr("sid");
             if (!sid.equals("")) {
-                LinkedList<String> list = new LinkedList<>();
-                list.add(sid);
+                /*LinkedList<String> list = new LinkedList<>();
+                list.add(sid);*/
                 String zsj = tr.select("td:nth-child(2)").text();
                 String[] timeSP = zsj.split("日");
+                String localdate = "";
                 if (Integer.parseInt(timeSP[0]) != parse.getDayOfMonth()) {
                     LocalDate parse2 = parse.plusDays(1);
-                    list.add(parse2.getYear() + "-" + parse2.getMonthValue() + "-" + parse2.getDayOfMonth());
+                    localdate = parse2.getYear() + "-" + parse2.getMonthValue() + "-" + parse2.getDayOfMonth();
                 } else {
-                    list.add(parse.getYear() + "-" + parse.getMonthValue() + "-" + parse.getDayOfMonth());
+                    localdate = parse.getYear() + "-" + parse.getMonthValue() + "-" + parse.getDayOfMonth();
                 }
-                list.add(tr.select("td:nth-child(1)").text());
+                /*list.add(tr.select("td:nth-child(1)").text());
                 list.add(timeSP[1]);
                 list.add(tr.select("td:nth-child(4)").text());
                 list.add(tr.select("td:nth-child(5)").text());
                 list.add(tr.select("td:nth-child(6)").text());
-                list.add(tr.select("td:nth-child(7)").text());
-                lists.add(list);
+                list.add(tr.select("td:nth-child(7)").text());*/
+                data_list data_list = new data_list();
+                data_list.setId(sid);
+                data_list.setMatchType("完场");
+                data_list.setTime(timeSP[1]);
+                data_list.setLeague(tr.select("td:nth-child(1)").text());
+                data_list.setDate(localdate +" " + timeSP[1]+":00");
+                data_list.setHomeTeam(tr.select("td:nth-child(4)").text());
+                data_list.setScore(tr.select("td:nth-child(5)").text());
+                data_list.setVisitingTeam(tr.select("td:nth-child(6)").text());
+                data_list.setBscore(tr.select("td:nth-child(7)").text());
+                data_list.setHistoryDate(localdate.replaceAll("-", ""));
+                data_list.setOrderNum(i);
+                i++;
+
+                lists.add(data_list);
+               // lists.add(list);
             }
         }
         return lists;
     }
 
-    public LinkedList<LinkedList<String>> Next(String html, String date) {
+    public LinkedList<data_list> Next(String html, String date) {
         LocalDate parse = LocalDate.parse(date, formatter);
-        LinkedList<LinkedList<String>> lists = new LinkedList<>();
+        LinkedList<data_list> lists = new LinkedList<>();
         Elements trs = Jsoup.parse(html).select("#table_live > tbody > tr");
+        int i = 0;
         for (Element tr : trs) {
             String sid = tr.attr("sid");
             if (!sid.equals("")) {
-                LinkedList<String> list = new LinkedList<>();
-                list.add(sid);
+                /*LinkedList<String> list = new LinkedList<>();
+                list.add(sid);*/
                 String[] timeSP = tr.select("td:nth-child(2)").text().split(" ");
                // System.out.println(timeSP[0]+"-"+timeSP[1]);
+                String localdate = "";
                 if (Integer.parseInt(timeSP[0].split("-")[1]) != parse.getDayOfMonth()) {
                     LocalDate parse2 = parse.plusDays(1);
-                    list.add(parse2.getYear() + "-" + parse2.getMonthValue() + "-" + parse2.getDayOfMonth());
+                    localdate = parse2.getYear() + "-" + parse2.getMonthValue() + "-" + parse2.getDayOfMonth();
                 } else {
-                    list.add(parse.getYear() + "-" + parse.getMonthValue() + "-" + parse.getDayOfMonth());
+                    localdate = parse.getYear() + "-" + parse.getMonthValue() + "-" + parse.getDayOfMonth();
                 }
-                list.add(tr.select("td:nth-child(1)").text());
+               /* list.add(tr.select("td:nth-child(1)").text());
                 list.add(timeSP[1]);
                 list.add(tr.select("td:nth-child(4)").text());
                 list.add(tr.select("td:nth-child(5)").text());
                 list.add(tr.select("td:nth-child(6)").text());
-                list.add(tr.select("td:nth-child(7)").text());
-                lists.add(list);
+                list.add(tr.select("td:nth-child(7)").text());*/
+
+                data_list data_list = new data_list();
+                data_list.setId(sid);
+                data_list.setMatchType("完场");
+                data_list.setLeague(tr.select("td:nth-child(1)").text());
+                data_list.setDate(localdate +" " + timeSP[1]+":00");
+                data_list.setTime(timeSP[1]);
+                data_list.setHomeTeam(tr.select("td:nth-child(4)").text());
+                data_list.setScore(tr.select("td:nth-child(5)").text());
+                data_list.setVisitingTeam(tr.select("td:nth-child(6)").text());
+                data_list.setBscore(tr.select("td:nth-child(7)").text());
+                data_list.setHistoryDate(localdate.replaceAll("-", ""));
+                data_list.setOrderNum(i);
+                lists.add(data_list);
+                i++;
             }
         }
 

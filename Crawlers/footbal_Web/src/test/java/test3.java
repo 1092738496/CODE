@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meditation.utils.httpUtils2;
 import com.meditation.utils.tools;
 import org.apache.hc.core5.http.Header;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -27,6 +31,7 @@ import java.util.zip.GZIPInputStream;
  */
 
 public class test3 {
+
     @Test
     public void test1() throws IOException, ParseException {
         httpUtils2 httpUtils = new httpUtils2();
@@ -124,8 +129,8 @@ public class test3 {
             System.out.println(s);
             String[] split1 = s.split("\\|");
             // List<String> z = new ArrayList<>(Arrays.asList(split1));
-            System.out.println(split1[1] + "--" + split1[split1.length-3]);
-            id_name.put(split1[1],split1[split1.length-3]);
+            System.out.println(split1[1] + "--" + split1[split1.length - 3]);
+            id_name.put(split1[1], split1[split1.length - 3]);
         }
 
         Map<String, List<List<String>>> gameDetails = new HashMap<>();
@@ -168,5 +173,67 @@ public class test3 {
 
             return byteArrayOutputStream.toString("UTF-8");
         }
+    }
+
+    void aa(List<Integer> arr) {
+        arr.set(1, 100);
+        arr = new ArrayList<>();
+        
+    }
+
+    @Test
+    public void test7() throws InterruptedException, IOException, ParseException {
+        CountDownLatch latch = new CountDownLatch(10);
+        for (int i = 0; i < 10; i++) {
+
+            new Thread(() -> {
+                try {
+                    a();
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+                latch.countDown();
+            }).start();
+        }
+        /*while (true){
+        List<Header> headers = new ArrayList<>();
+        headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"));
+        httpUtils2 httpUtil = new httpUtils2();
+        httpUtil.setHeaders(headers);
+        String s = httpUtil.get("http://125.122.20.253:9527/rateServer/list/ji", "utf-8");
+        }*/
+        latch.await();
+
+
+
+
+    }
+
+    public void a () throws IOException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Header> headers = new ArrayList<>();
+        headers.add(new BasicHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"));
+        httpUtils2 httpUtil = new httpUtils2();
+        httpUtil.setHeaders(headers);
+        String s = httpUtil.get("http://125.122.20.253:9527/rateServer/list/ji", "utf-8");
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+        JsonNode jsonNode = mapper.readValue(s, JsonNode.class);
+        for (JsonNode node : jsonNode) {
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                System.out.println("---------------------------");
+                String html = null;
+                try {
+                    html = httpUtil.get("http://125.122.20.253:9527/rateServer/xin/"+node.get(0).textValue(), "utf-8");
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(html);
+            });
+            futures.add(future);
+        }
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
     }
 }

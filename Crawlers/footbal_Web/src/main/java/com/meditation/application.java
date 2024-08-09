@@ -17,12 +17,10 @@ import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
-import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
 import org.apache.hc.core5.reactor.IOReactorConfig;
@@ -197,7 +195,6 @@ public class application {
                     .setDefaultHeaders(headers)
                     .setDefaultRequestConfig(config)
                     .setRetryStrategy(retryStrategy)
-                    .setRoutePlanner(new DefaultProxyRoutePlanner(new HttpHost("127.0.0.1", 7890)))
                     .build();
             AsyncClient.start();
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {

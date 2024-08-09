@@ -42,9 +42,7 @@ public class Ya_sfp {
             String html = httpUtil.get("https://1x2.titan007.com/oddslist/" + sid + ".htm", "utf-8");
             String src = Jsoup.parse(html).select("body > script:nth-child(1)").attr("src");
             String js = httpUtil.get("https:" + src, "utf-8");
-            System.out.println("*************************************");
-            System.out.println(js);
-            System.out.println("*************************************");
+
             String host = tools.regexStr1(js, "var hometeam_cn=.*;var guestteam_cn").replaceAll("var hometeam_cn=\"",
                     "").replaceAll("\";var guestteam_cn", "");
             String guest = tools.regexStr1(js, "var guestteam_cn=.*;var hometeam_f").replaceAll("var guestteam_cn=\"",
