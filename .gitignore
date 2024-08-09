@@ -1,0 +1,31 @@
+# 忽略所有.idea文件夹，通常包含IDE的特定配置
+.idea/
+.target/
+.vs/
+# 忽略所有的.log文件
+*.log
+*.exe
+*.iml
+*.sln
+*.vcxproj
+*.filters
+*.user
+# 忽略整个build目录
+build/
+vscode/
+Debug/
+Release/
+out/
+target/
+
+# 忽略所有编译后的Java字节码
+*.class
+*.bat
+
+# 忽略所有名为.cache的文件夹
+*.cache/
+
+# 忽略所有.gitignore文件自身
+.gitignore
+
+# git add . && git commit -m "提交" && git push origin master
