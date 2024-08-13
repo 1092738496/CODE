@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.pressdao">
+  <insert id="insert" parameterType="pojo.press">
+      INSERT INTO press_copy2_copy1(date,title,subtitle1,subtitle2,text,author,url) VALUE
+      (#{date},#{title},#{subtitle1},#{subtitle2},#{text},#{author},#{url});
+  </insert>
+
+    <select id="sum" resultType="int">
+        SELECT COUNT(*) FROM press;
+    </select>
+    <select id="getpress" resultType="pojo.press">
+        SELECT * FROM press WHERE id = ${id}
+    </select>
+    <update id="updatePress" parameterType="pojo.press">
+        UPDATE press SET
+        date=#{date},title=#{title},subtitle1=#{subtitle1},subtitle2=#{subtitle2},text=#{text},author=#{author},url=#{url} WHERE id = #{id}
+    </update>
+</mapper>
