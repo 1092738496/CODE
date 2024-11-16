@@ -51,44 +51,43 @@ public class Data_tool {
         }
 
         try {
-            js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title.div_title_search > " +
-                    "dl > " +
-                    "dt > a:nth-child(5)\").click()");
+            js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title_new > dl > dt > " +
+                    "a:nth-of-type(2)\").click()");
         } catch (Exception e) {
 
         }
         //判断
         try {
+
             Boolean until = driverWait.until(ExpectedConditions.attributeToBe(By.cssSelector("#form1 > div:nth-child" +
-                    "(6) " +
-                    "> div.div_title" +
-                    ".div_title_search > dl > dt > a:nth-child(5)"), "class", "hover"));
+                    "(6) > div.div_title_new > dl > dt > a:nth-of-type(2)"), "class", "hover"));
             if (until) {
-                js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title.div_title_search" +
-                        " > dl > " +
-                        "dt > a:nth-child(5)\").click()");
+                js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title_new > dl > dt > " +
+                        "a:nth-of-type(2)\").click()");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         //判断
-        Boolean ss = false;
+       /* Boolean ss = false;
         try {
             ss = driverWait.until(ExpectedConditions.textToBe(By.cssSelector(
-                    "#form1 > div:nth-child(6) > div.div_content > div.product_content > table > tbody > tr" +
-                            ".fixedtoptablehead > th:nth-child(2)"), "生产企业"));
+                    "#form1 > div:nth-child(6) > div.div_title_new > dl > dt > a:nth-of-type(2)"), "生产企业"));
         } catch (Exception e) {
 
+        }*/
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        if (!ss) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title.div_title_search > " +
-                    "dl > " +
-                    "dt > a:nth-child(5)\").click()");
+        String text1 = chromeDriver.findElement(By.cssSelector("#form1 > div:nth-child(6) > div.div_title_new > dl > " +
+                "dt > " +
+                "a:nth-of-type(2)")).getText();
+
+        if (!text1.equals("企业报价")) {
+            js.executeScript("document.querySelector(\"#form1 > div:nth-child(6) > div.div_title_new > dl > dt > " +
+                    "a:nth-of-type(2)\").click()");
         }
 
         String aa = "#form1 > div:nth-child(6) > div.div_content > div.product_content > table > tbody > tr:nth-child" +

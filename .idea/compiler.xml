@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Test_1" />
+        <module name="XMLYaudio" />
+        <module name="XiaoShuo" />
+        <module name="e-hentai" />
+        <module name="vidio_ZIMU_input" />
+        <module name="zhuochuang" />
+        <module name="footbal_Web" />
+        <module name="gonganshenghuowang" />
+        <module name="XianYu" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="Crawlers" target="1.8" />
+      <module name="e-hentai" target="1.8" />
+      <module name="footbal_Web" target="1.8" />
+      <module name="gonganshenghuowang" target="1.8" />
+      <module name="Test_1" target="1.8" />
+      <module name="vidio_ZIMU_input" target="1.8" />
+      <module name="XianYu" target="1.8" />
+      <module name="XiaoShuo" target="1.8" />
+      <module name="XMLYaudio" target="1.8" />
+      <module name="zhuochuang" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="footbal_Web" options="-parameters" />
+    </option>
+  </component>
+</project>

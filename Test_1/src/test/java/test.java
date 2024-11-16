@@ -1,18 +1,11 @@
-import org.apache.commons.compress.utils.Lists;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.ParseException;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicHeader;
-import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,38 +35,30 @@ public class test {
     }
 
     @Test
-    public void test1() {
+    public void test1() throws IOException {
+        File file = new File("D:\\Game\\iniRePather-Skyrim\\Mod Organizer 2\\mods\\Legacy of the Dragonborn - " +
+                "Creation Club Patch Hub Simplified Chinese translation");
+        File[] files = file.listFiles();
+        for (File file1 : files) {
+            if (file1.isFile()) {
+                String aa = file1.getPath().replaceAll(file1.getName(),"")+file1.getName().replaceAll(".esp", "")+1+
+                        ".esp";
 
 
-        try {
-            for (int i = 0; i < 200; i++) {
+                //System.out.println(file.getAbsolutePath());
+                byte[] bytes = new byte[1024];
+                int p = 0;
+                FileInputStream inputStream = new FileInputStream(file1.getPath());
+                FileOutputStream outputStream = new FileOutputStream(aa);
+                while ( (p = inputStream.read(bytes)) != -1){
+                    outputStream.write(bytes);
+                }
 
-                CloseableHttpClient httpClient = HttpClients.custom()
-                        .setProxy(new org.apache.hc.core5.http.HttpHost("127.0.0.1",7890))
-                        .build();
-
-                HttpPost httpPost = new HttpPost("https://www.okooo.com/soccer/match/1255125/okoooexponent/xmlData/");
-
-                httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-                        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36");
-                List<NameValuePair> params = Lists.newArrayList();
-                params.add(new BasicNameValuePair("type", "okoooexponent"));
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
-
-                httpPost.setHeader("Cookie",
-                        "acw_sc__v3=663382251fe5673567f6934e12cbc20f4a5078b8");
-                CloseableHttpResponse response = null;
-                response = httpClient.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-                //System.out.println(pool.getTotalStats().toString());
-                String html = EntityUtils.toString(entity, "utf-8");
-                System.out.println(html);
+                inputStream.close();
+                outputStream.close();
+                file1.delete();
 
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 }

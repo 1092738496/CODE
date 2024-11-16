@@ -14,27 +14,25 @@ import java.util.Arrays;
 public class Props {
 
     public static String getStr(String key) {
-      /* String property = System.getProperty("user.dir");
-        cn.hutool.setting.dialect.Props props = new cn.hutool.setting.dialect.Props(property+"\\zhuochuangConfig
-        .properties");*/
+       String property = System.getProperty("user.dir");
+        cn.hutool.setting.dialect.Props props = new cn.hutool.setting.dialect.Props(property+"\\zhuochuangConfig.properties");
 
-        String path = Props.class.getClassLoader().getResource("zhuochuangConfig.properties").getPath();
-        cn.hutool.setting.dialect.Props props = new cn.hutool.setting.dialect.Props(path);
+       /* String path = Props.class.getClassLoader().getResource("zhuochuangConfig.properties").getPath();
+        cn.hutool.setting.dialect.Props props = new cn.hutool.setting.dialect.Props(path);*/
         return props.getStr(key);
     }
 
 
     public ChromeDriver rutchrome() {
-       /* String property = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", property + "\\chromedriver.exe");*/
+        String property = System.getProperty("user.dir");
+        System.setProperty("webdriver.chrome.driver", property + "\\chromedriver.exe");
 
-        System.setProperty("webdriver.chrome.driver", "E:\\CODE\\Crawlers\\zhuochuang\\src\\main\\resources" +
-                "\\chromedriver.exe");
-        System.setProperty("webdriver.chrome.bin", Props.getStr("ChromePath"));
+        /*System.setProperty("webdriver.chrome.driver", "E:\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.bin", Props.getStr("ChromePath"));*/
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-        options.addArguments("--headless"); //无浏览器模式
+        options.addArguments("--headless=old"); //无浏览器模式
         options.addArguments("--disable-blink-features");
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.addArguments("--no-sandbox");

@@ -12,6 +12,7 @@ import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
@@ -68,16 +69,18 @@ public class httpUtils2 {
             pool.setMaxTotal(32);
             pool.setDefaultMaxPerRoute(32);
             //连接参数
+            HttpHost host = new HttpHost("127.0.0.1", 7890);
             RequestConfig requestConfig = RequestConfig.custom()
                     .setResponseTimeout(10, TimeUnit.SECONDS)
                     .setConnectTimeout(5, TimeUnit.SECONDS)
                     .setConnectionRequestTimeout(10, TimeUnit.SECONDS)
+                    .setProxy(host)
                     .build();
-
             httpClientBuilder = HttpClients.custom();
             httpClientBuilder
-                    .setConnectionManager(pool);
-            // .setDefaultRequestConfig(requestConfig);
+                    .setConnectionManager(pool)
+            .setProxy(host)
+            .setDefaultRequestConfig(requestConfig);
         } catch (Exception e) {
             e.printStackTrace();
         }

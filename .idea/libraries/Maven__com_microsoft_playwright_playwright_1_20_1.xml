@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.microsoft.playwright:playwright:1.20.1">
+    <CLASSES>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/com/microsoft/playwright/playwright/1.20.1/playwright-1.20.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/com/microsoft/playwright/playwright/1.20.1/playwright-1.20.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/com/microsoft/playwright/playwright/1.20.1/playwright-1.20.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

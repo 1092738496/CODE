@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="zhuochuang:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bbfca01b-716e-4d72-ae77-f462cb63eb3d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="D:/Development Tool/node-18.17.1/node" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="E:\Developmen\apache-maven-3.5.4/jars" />
+        <option name="mavenHome" value="E:/Developmen/apache-maven-3.5.4" />
+        <option name="userSettingsFile" value="E:\Developmen\apache-maven-3.5.4/conf/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="jdkForImporter" value="1.8" />
+        <option name="vmOptionsForImporter" value="-Xmx1024m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="1.8" />
+  </component>
+  <component name="ProjectId" id="2kcFgi7yzFjDprhtmc7qCyJx0eR" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
+    <property name="floatTabList" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/e-hentai/src/main/resources" />
+    <property name="node.js.path.for.package.stylelint" value="project" />
+    <property name="node.js.selected.package.stylelint" value="" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15429688" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\CODE\Crawlers\e-hentai\src\main\resources" />
+      <recent name="D:\CODE\Crawlers\XianYu\src\main\java" />
+      <recent name="D:\CODE\Crawlers\e-hentai\src\main\java" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utils" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CODE\Crawlers\XianYu\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.mian (1)">
+    <configuration name="Unnamed (1)" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mian" />
+      <module name="e-hentai" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mian" />
+      <module name="e-hentai" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main" />
+      <module name="XianYu" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="mian (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mian" />
+      <module name="XiaoShuo" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="mian" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mian" />
+      <module name="e-hentai" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="XianYu" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="test" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="i.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/XianYu/src/main/resources/i.js" working-dir="$PROJECT_DIR$/XianYu/src/main/resources">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Unnamed (1)" />
+      <item itemvalue="Application.mian" />
+      <item itemvalue="Application.mian (1)" />
+      <item itemvalue="Application.main" />
+      <item itemvalue="JUnit.test.test1" />
+      <item itemvalue="Node.js.i.js" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.mian (1)" />
+        <item itemvalue="Application.main" />
+        <item itemvalue="JUnit.test.test1" />
+        <item itemvalue="Node.js.i.js" />
+        <item itemvalue="Application.mian" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bbfca01b-716e-4d72-ae77-f462cb63eb3d" name="Default Changelist" comment="" />
+      <created>1723575070322</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723575070322</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="183" key="#Project_Structure" timestamp="1730299084993">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="183" key="#Project_Structure/0.0.1920.1050@0.0.1920.1050" timestamp="1730299084993" />
+    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1730063296568">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1730063296568" />
+    <state x="477" y="354" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1728913300007">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="477" y="354" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1728913300007" />
+    <state x="806" y="414" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1723576227656">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="806" y="414" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1723576227656" />
+    <state x="704" y="383" width="512" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1731782014735">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="704" y="383" width="512" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1050@0.0.1920.1050" timestamp="1731782014735" />
+    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1730059937863">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1730059937863" />
+    <state x="672" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1728911874892">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="672" y="384" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1728911874892" />
+    <state x="729" y="260" key="FileChooserDialogImpl" timestamp="1728913306231">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="729" y="260" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1728913306231" />
+    <state width="1569" height="329" key="GridCell.Tab.0.bottom" timestamp="1731664398556">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1569" height="329" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1731664398556" />
+    <state width="1569" height="329" key="GridCell.Tab.0.center" timestamp="1731664398556">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1569" height="329" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1731664398556" />
+    <state width="1569" height="329" key="GridCell.Tab.0.left" timestamp="1731664398556">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1569" height="329" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1731664398556" />
+    <state width="1569" height="329" key="GridCell.Tab.0.right" timestamp="1731664398556">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1569" height="329" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1731664398556" />
+    <state width="1555" height="318" key="GridCell.Tab.1.bottom" timestamp="1731244858077">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1555" height="318" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1731244858077" />
+    <state width="1555" height="318" key="GridCell.Tab.1.center" timestamp="1731244858077">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1555" height="318" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1731244858077" />
+    <state width="1555" height="318" key="GridCell.Tab.1.left" timestamp="1731244858077">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1555" height="318" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1731244858077" />
+    <state width="1555" height="318" key="GridCell.Tab.1.right" timestamp="1731244858077">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1555" height="318" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1731244858077" />
+    <state x="387" y="270" key="NewModule_or_Project.wizard" timestamp="1728883541104">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="387" y="270" key="NewModule_or_Project.wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1728883541104" />
+    <state x="227" y="147" key="SettingsEditor" timestamp="1730329393043">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="227" y="147" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1730329393043" />
+    <state width="968" height="533" key="XDebugger.FullValuePopup" timestamp="1730326338105">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="968" height="533" key="XDebugger.FullValuePopup/0.0.1920.1050@0.0.1920.1050" timestamp="1730326338105" />
+    <state x="620" y="220" key="new project wizard" timestamp="1730294581000">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="620" y="220" key="new project wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1730294581000" />
+    <state x="623" y="227" key="search.everywhere.popup" timestamp="1728904988081">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1728904988081" />
+  </component>
+</project>

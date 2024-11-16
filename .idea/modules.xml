@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Crawlers.iml" filepath="$PROJECT_DIR$/.idea/Crawlers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test_1/Test_1.iml" filepath="$PROJECT_DIR$/Test_1/Test_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XMLYaudio/XMLYaudio.iml" filepath="$PROJECT_DIR$/XMLYaudio/XMLYaudio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XianYu/XianYu.iml" filepath="$PROJECT_DIR$/XianYu/XianYu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XiaoShuo/XiaoShuo.iml" filepath="$PROJECT_DIR$/XiaoShuo/XiaoShuo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e-hentai/e-hentai.iml" filepath="$PROJECT_DIR$/e-hentai/e-hentai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/footbal_Web/footbal_Web.iml" filepath="$PROJECT_DIR$/footbal_Web/footbal_Web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gonganshenghuowang/gonganshenghuowang.iml" filepath="$PROJECT_DIR$/gonganshenghuowang/gonganshenghuowang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vidio_ZIMU_input/vidio_ZIMU_input.iml" filepath="$PROJECT_DIR$/vidio_ZIMU_input/vidio_ZIMU_input.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zhuochuang/zhuochuang.iml" filepath="$PROJECT_DIR$/zhuochuang/zhuochuang.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.github.mymonstercat:rapidocr:0.0.7">
+    <CLASSES>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/io/github/mymonstercat/rapidocr/0.0.7/rapidocr-0.0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/io/github/mymonstercat/rapidocr/0.0.7/rapidocr-0.0.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://E:/Developmen/apache-maven-3.5.4/jars/io/github/mymonstercat/rapidocr/0.0.7/rapidocr-0.0.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class mian {
     public static void main(String[] args) {
-        String property = System.getProperty("user.dir");
-        File file = new File(property+"//小说");
+        //String property = System.getProperty("user.dir");
+        File file = new File("D:\\新建文件夹"+"//小说");
         for (File listFile : file.listFiles()) {
             if (listFile.toString().endsWith("txt")) {
                 updataFileName(listFile.toString());
@@ -97,6 +97,7 @@ public class mian {
         map.put("踩屄", "踩逼");
         map.put("小屄", "骚屄");
         map.put("蜜屄", "湿屄");
+        map.put("子宫", "臭逼");
 
         map.put("肛蕾", "屁蕾");
         map.put("屁穴", "屁眼");
